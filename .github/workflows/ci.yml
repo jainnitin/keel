@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and test
+    # Apple-silicon runner with macOS 26; its default Xcode is 26.x.
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - name: Check out
+        uses: actions/checkout@v5
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      # The scheme builds Keel.app for testing, so this also catches app build breaks.
+      # KeelCoreTests is a hostless logic bundle, so tests run without signing.
+      - name: Build app and run tests (Xcode)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project Keel.xcodeproj \
+            -scheme Keel \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY="" \
+            test | xcbeautify
+
+      - name: Run KeelCore tests (Swift package)
+        run: swift test

@@ -1,5 +1,7 @@
 # Keel
 
+[![CI](https://github.com/jainnitin/keel/actions/workflows/ci.yml/badge.svg)](https://github.com/jainnitin/keel/actions/workflows/ci.yml)
+
 A focused, native, read-only PDF reader for Apple-silicon Macs, built with SwiftUI and PDFKit.
 
 Keel never edits, annotates, decrypts to disk, or saves over the source PDF.
