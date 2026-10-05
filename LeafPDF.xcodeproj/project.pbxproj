@@ -13,6 +13,7 @@
 		0A0A0A0A0A0A0A0A0A0A0A02 /* libLeafPDFCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AD8711B2630DEEFB9768DB /* libLeafPDFCore.a */; };
 		261AEAD3FB222472FADC07BA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E8D20FF729E08EDAF46171B /* Security.framework */; };
 		27291B9CFF24290510250D37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32DE928346FF9E8CD619CCC /* AppDelegate.swift */; };
+		08FD6B7279743B621879084F /* WelcomeWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEB2ED2899299DC3D64D31E /* WelcomeWindow.swift */; };
 		31996B7A37743D775735D738 /* DocumentIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B476F292828789C01EDACCB /* DocumentIdentityTests.swift */; };
 		35D0553377C8B8F239C7927C /* PDFOutlineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FB049B1512AEFECB80279F /* PDFOutlineModel.swift */; };
 		39B1168BA83DCC620311D7BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4754451E1898222D956F414 /* Assets.xcassets */; };
@@ -92,6 +93,7 @@
 		D8FB049B1512AEFECB80279F /* PDFOutlineModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PDFOutlineModel.swift; sourceTree = "<group>"; };
 		DC8316F6AD9D0AA47480CB50 /* ReaderRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReaderRootView.swift; sourceTree = "<group>"; };
 		F32DE928346FF9E8CD619CCC /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2FEB2ED2899299DC3D64D31E /* WelcomeWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			children = (
 				F32DE928346FF9E8CD619CCC /* AppDelegate.swift */,
 				D231DC8A1BAAB8BE3F821CEF /* LeafPDFApp.swift */,
+				2FEB2ED2899299DC3D64D31E /* WelcomeWindow.swift */,
 			);
 			name = App;
 			path = App;
@@ -406,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27291B9CFF24290510250D37 /* AppDelegate.swift in Sources */,
+				08FD6B7279743B621879084F /* WelcomeWindow.swift in Sources */,
 				AC825D7664023AED04F2058B /* LeafPDFApp.swift in Sources */,
 				434B5A0542E3A60EC2B4879D /* LeafPDFDocument.swift in Sources */,
 				86B31BCB4D9A7FA24514F389 /* PDFViewController.swift in Sources */,

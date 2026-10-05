@@ -49,6 +49,14 @@ private struct DocumentCommands: Commands {
     }
 
     CommandGroup(replacing: .saveItem) {}
+
+    CommandGroup(before: .windowList) {
+      Button("Welcome to Leaf PDF") {
+        WelcomeWindowController.shared.show()
+      }
+      .keyboardShortcut("1", modifiers: [.command, .shift])
+      Divider()
+    }
   }
 }
 
