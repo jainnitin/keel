@@ -27,6 +27,9 @@ final class ReaderViewModel: ObservableObject {
   }
   @Published var sidebarSection: ReaderSidebarSection = .thumbnails {
     didSet {
+      if sidebarSection != .search {
+        browsingSection = sidebarSection
+      }
       scheduleStateSave()
     }
   }
@@ -50,6 +53,8 @@ final class ReaderViewModel: ObservableObject {
   let thumbnailService: ThumbnailService
 
   private(set) var outline: [PDFOutlineNode] = []
+  /// The non-search section to return to when the search query is cleared.
+  private var browsingSection: ReaderSidebarSection = .thumbnails
   private let passwordCoordinator: PasswordCoordinator
   private let stateStore: ReaderStateStore
   private var accessTask: Task<Void, Never>?
@@ -83,6 +88,10 @@ final class ReaderViewModel: ObservableObject {
     document.pageCount
   }
 
+  var hasSearchQuery: Bool {
+    !searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+
   func prepare() {
     guard accessState == .preparing else {
       return
@@ -95,9 +104,11 @@ final class ReaderViewModel: ObservableObject {
   func updateSearchQuery() {
     searchTask?.cancel()
     let query = searchQuery
-    if !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+    if hasSearchQuery {
       sidebarSection = .search
       sidebarVisible = true
+    } else if sidebarSection == .search {
+      sidebarSection = browsingSection
     }
     searchTask = Task { [weak self] in
       try? await Task.sleep(for: .milliseconds(250))
@@ -281,7 +292,8 @@ final class ReaderViewModel: ObservableObject {
       present(error, title: "Reading Position Could Not Be Restored")
     }
     layout = restored.layout
-    sidebarSection = restored.sidebarSection
+    // The search query isn't persisted, so never reopen onto an empty Search section.
+    sidebarSection = restored.sidebarSection == .search ? .thumbnails : restored.sidebarSection
     sidebarVisible = restored.sidebarVisible
     viewer.restore(restored)
     accessState = .ready
@@ -309,7 +321,7 @@ final class ReaderViewModel: ObservableObject {
       pageIndex: viewer.currentPageIndex,
       scaleFactor: viewer.scaleFactor,
       layout: layout,
-      sidebarSection: sidebarSection,
+      sidebarSection: browsingSection,
       sidebarVisible: sidebarVisible
     )
     do {

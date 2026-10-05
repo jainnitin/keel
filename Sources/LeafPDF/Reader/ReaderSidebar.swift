@@ -7,7 +7,10 @@ struct ReaderSidebar: View {
 
   var body: some View {
     VStack(spacing: 0) {
-      SidebarSectionPicker(selection: $model.sidebarSection)
+      SidebarSectionPicker(
+        selection: $model.sidebarSection,
+        showsSearch: model.hasSearchQuery
+      )
         .padding()
 
       Divider()
@@ -34,6 +37,8 @@ struct ReaderSidebar: View {
 
 private struct SidebarSectionPicker: View {
   @Binding var selection: ReaderSidebarSection
+  /// Search results only exist while the toolbar search field has a query.
+  let showsSearch: Bool
 
   var body: some View {
     ViewThatFits(in: .horizontal) {
@@ -42,12 +47,14 @@ private struct SidebarSectionPicker: View {
           .tag(ReaderSidebarSection.thumbnails)
         Text("Contents")
           .tag(ReaderSidebarSection.outline)
-        Text("Search")
-          .tag(ReaderSidebarSection.search)
+        if showsSearch {
+          Text("Search")
+            .tag(ReaderSidebarSection.search)
+        }
       }
       .pickerStyle(.segmented)
       .labelsHidden()
-      .frame(width: 244)
+      .frame(width: showsSearch ? 244 : 170)
 
       Picker("Sidebar", selection: $selection) {
         Label("Thumbnails", systemImage: "rectangle.stack")
@@ -60,15 +67,17 @@ private struct SidebarSectionPicker: View {
           .help("Contents")
           .accessibilityLabel("Contents")
           .tag(ReaderSidebarSection.outline)
-        Label("Search", systemImage: "text.magnifyingglass")
-          .labelStyle(.iconOnly)
-          .help("Search")
-          .accessibilityLabel("Search")
-          .tag(ReaderSidebarSection.search)
+        if showsSearch {
+          Label("Search", systemImage: "text.magnifyingglass")
+            .labelStyle(.iconOnly)
+            .help("Search")
+            .accessibilityLabel("Search")
+            .tag(ReaderSidebarSection.search)
+        }
       }
       .pickerStyle(.segmented)
       .labelsHidden()
-      .frame(maxWidth: 160)
+      .frame(maxWidth: showsSearch ? 160 : 108)
     }
     .frame(maxWidth: .infinity)
     .accessibilityIdentifier("reader.sidebar.sectionPicker")
