@@ -17,6 +17,7 @@ final class PDFViewController: NSObject, ObservableObject {
   private var pageObserver: NSObjectProtocol?
   private var scaleObserver: NSObjectProtocol?
   private var historyObserver: NSObjectProtocol?
+  private var mouseButtonMonitor: Any?
   private var currentLayout: ReaderLayout?
   private var restoredState: ReaderState?
 
@@ -58,9 +59,13 @@ final class PDFViewController: NSObject, ObservableObject {
     if let historyObserver {
       NotificationCenter.default.removeObserver(historyObserver)
     }
+    if let mouseButtonMonitor {
+      NSEvent.removeMonitor(mouseButtonMonitor)
+    }
     pageObserver = nil
     scaleObserver = nil
     historyObserver = nil
+    mouseButtonMonitor = nil
     pdfView?.document = nil
     pdfView = nil
     document = nil
@@ -202,6 +207,16 @@ final class PDFViewController: NSObject, ObservableObject {
         self?.updatePublishedState()
       }
     }
+    // Go back and forward with mouse side buttons and swipes, as in a web browser. PDFView's
+    // inner views receive these events first, so watch the window's events instead.
+    mouseButtonMonitor = NSEvent.addLocalMonitorForEvents(
+      matching: [.otherMouseDown, .otherMouseUp, .swipe]
+    ) { [weak self] event in
+      let handled = MainActor.assumeIsolated {
+        self?.handleNavigationEvent(event) ?? false
+      }
+      return handled ? nil : event
+    }
     historyObserver = NotificationCenter.default.addObserver(
       forName: .PDFViewChangedHistory,
       object: view,
@@ -226,6 +241,30 @@ final class PDFViewController: NSObject, ObservableObject {
     scaleFactor = pdfView.scaleFactor
     autoScales = pdfView.autoScales
     onStateChange?()
+  }
+
+  /// Handles back/forward from mouse side buttons (buttons 4 and 5) and swipes; many mice
+  /// send their back and forward buttons as swipes. Returns whether the event was handled.
+  private func handleNavigationEvent(_ event: NSEvent) -> Bool {
+    guard let pdfView, event.window === pdfView.window else {
+      return false
+    }
+    switch event.type {
+    case .swipe where event.deltaX > 0:
+      goBack()
+    case .swipe where event.deltaX < 0:
+      goForward()
+    case .otherMouseUp where event.buttonNumber == 3:
+      goBack()
+    case .otherMouseUp where event.buttonNumber == 4:
+      goForward()
+    case .otherMouseDown:
+      // Swallow the press of a button whose release navigates.
+      return event.buttonNumber == 3 || event.buttonNumber == 4
+    default:
+      return false
+    }
+    return true
   }
 
   private func updateHistoryState() {
