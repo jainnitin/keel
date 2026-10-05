@@ -184,6 +184,9 @@ private struct ReaderToolbar: ToolbarContent {
       .help("Choose continuous or single-page layout")
 
       Menu {
+        Button("Copy Link to Page", action: model.copyLinkToCurrentPage)
+          .keyboardShortcut("c", modifiers: [.command, .option])
+        Divider()
         Button("Forget Saved Password", role: .destructive) {
           model.forgetSavedPassword()
         }

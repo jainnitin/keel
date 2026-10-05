@@ -64,6 +64,8 @@ final class ReaderViewModel: ObservableObject {
   private var stateSaveTask: Task<Void, Never>?
   private var isTornDown = false
   private var didPresentStatePersistenceError = false
+  /// A page requested by a link before the document was ready; it overrides the restored position.
+  private var pendingPageNumber: Int?
 
   init(
     document: PDFDocument,
@@ -191,6 +193,23 @@ final class ReaderViewModel: ObservableObject {
     viewer.go(to: selection)
   }
 
+  /// Shows a 1-based page, clamped to the document, once the reader is ready.
+  func showPage(number: Int) {
+    guard accessState == .ready else {
+      pendingPageNumber = number
+      return
+    }
+    viewer.go(toPageIndex: clampedPageIndex(number))
+  }
+
+  func copyLinkToCurrentPage() {
+    let link = PageLink(fileURL: sourceURL, pageNumber: viewer.currentPageIndex + 1)
+    let pasteboard = NSPasteboard.general
+    pasteboard.clearContents()
+    pasteboard.setString(link.url.absoluteString, forType: .URL)
+    pasteboard.setString(link.url.absoluteString, forType: .string)
+  }
+
   func tearDown() {
     guard !isTornDown else {
       return
@@ -270,7 +289,7 @@ final class ReaderViewModel: ObservableObject {
       return
     }
     outline = PDFOutlineBuilder.build(document: document)
-    let restored: ReaderState
+    var restored: ReaderState
     do {
       restored = (try stateStore.state(for: identity) ?? ReaderState())
         .normalized(pageCount: pageCount)
@@ -278,12 +297,20 @@ final class ReaderViewModel: ObservableObject {
       restored = ReaderState().normalized(pageCount: pageCount)
       present(error, title: "Reading Position Could Not Be Restored")
     }
+    if let pendingPageNumber {
+      restored.pageIndex = clampedPageIndex(pendingPageNumber)
+      self.pendingPageNumber = nil
+    }
     layout = restored.layout
     // The search query isn't persisted, so never reopen onto an empty Search section.
     sidebarSection = restored.sidebarSection == .search ? .thumbnails : restored.sidebarSection
     sidebarVisible = restored.sidebarVisible
     viewer.restore(restored)
     accessState = .ready
+  }
+
+  private func clampedPageIndex(_ pageNumber: Int) -> Int {
+    min(max(pageNumber, 1), pageCount) - 1
   }
 
   private func scheduleStateSave() {
