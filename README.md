@@ -46,7 +46,7 @@ swift test
 
 ```text
 Sources/Keel/         macOS app: AppKit/SwiftUI UI, PDFKit, Keychain
-Sources/KeelCore/     Pure logic with no UI dependencies: identity, reader state, search excerpts
+Sources/KeelCore/     Pure logic with no UI dependencies: identity, reader state, search excerpts, text-layer sampling
 Tests/KeelCoreTests/  Unit tests for KeelCore
 Keel/                 Info.plist and sandbox entitlements
 ```

@@ -18,6 +18,8 @@ struct KeelApp: App {
 }
 
 private struct DocumentCommands: Commands {
+  @ObservedObject private var activeReader = ActiveReader.shared
+
   var body: some Commands {
     CommandGroup(replacing: .newItem) {
       Button("Open…") {
@@ -50,6 +52,7 @@ private struct DocumentCommands: Commands {
         NSApp.sendAction(#selector(NSDocument.printDocument(_:)), to: nil, from: nil)
       }
       .keyboardShortcut("p", modifiers: .command)
+      .disabled(activeReader.model == nil)
     }
 
     CommandGroup(before: .windowList) {

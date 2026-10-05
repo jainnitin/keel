@@ -1,6 +1,5 @@
 import AppKit
 import KeelCore
-import PDFKit
 import SwiftUI
 
 struct ReaderRootView: View {

@@ -225,7 +225,8 @@ final class PDFViewController: NSObject, ObservableObject {
     guard pageBounds.width > 0 else {
       return
     }
-    let availableWidth = max(pdfView.bounds.width - 32, 1)
+    let margins = pdfView.pageBreakMargins
+    let availableWidth = max(pdfView.bounds.width - margins.left - margins.right, 1)
     pdfView.autoScales = false
     pdfView.scaleFactor = min(
       max(availableWidth / pageBounds.width, pdfView.minScaleFactor),
