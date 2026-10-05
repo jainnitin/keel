@@ -2,6 +2,10 @@ import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
 
+private struct WindowNotification: @unchecked Sendable {
+  let value: Notification
+}
+
 @MainActor
 final class WelcomeWindowController: NSWindowController, NSWindowDelegate {
   static let shared = WelcomeWindowController()
@@ -37,12 +41,13 @@ final class WelcomeWindowController: NSWindowController, NSWindowDelegate {
       object: nil,
       queue: .main
     ) { [weak self] notification in
-      let isDocumentWindow =
-        (notification.object as? NSWindow)?.windowController?.document is LeafPDFDocument
-      guard isDocumentWindow else {
-        return
-      }
-      MainActor.assumeIsolated {
+      let event = WindowNotification(value: notification)
+      Task { @MainActor [weak self, event] in
+        let isDocumentWindow =
+          (event.value.object as? NSWindow)?.windowController?.document is LeafPDFDocument
+        guard isDocumentWindow else {
+          return
+        }
         self?.close()
       }
     }
@@ -99,7 +104,9 @@ private struct WelcomeView: View {
       }
       pdfs.forEach(DocumentOpener.open)
       return !pdfs.isEmpty
-    } isTargeted: { isDropTargeted = $0 }
+    } isTargeted: {
+      isDropTargeted = $0
+    }
   }
 
   private var introduction: some View {
