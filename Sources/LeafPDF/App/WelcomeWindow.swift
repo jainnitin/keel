@@ -23,6 +23,10 @@ final class WelcomeWindowController: NSWindowController, NSWindowDelegate {
     window.isReleasedWhenClosed = false
     window.tabbingMode = .disallowed
     window.isRestorable = false
+    window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+    window.standardWindowButton(.zoomButton)?.isHidden = true
+    // Keep the window at its fixed size instead of letting SwiftUI add the title bar inset.
+    hostingController.sizingOptions = []
     window.contentViewController = hostingController
     window.setContentSize(NSSize(width: 680, height: 420))
     super.init(window: window)
@@ -86,7 +90,7 @@ private struct WelcomeView: View {
       RecentDocumentsList(urls: recentURLs)
         .frame(width: 280)
     }
-    .frame(width: 680, height: 420)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .ignoresSafeArea()
     .dropDestination(for: URL.self) { urls, _ in
       let pdfs = urls.filter { url in
