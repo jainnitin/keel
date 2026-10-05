@@ -84,10 +84,6 @@ final class KeelDocument: NSDocument {
     addWindowController(windowController)
   }
 
-  func showPage(number: Int) {
-    readerViewModel?.showPage(number: number)
-  }
-
   override func close() {
     readerViewModel?.tearDown()
     readerViewModel = nil

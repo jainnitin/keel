@@ -14,8 +14,6 @@ Notes for anyone (human or agent) changing this codebase. Keep this file short a
 - Manual testing: launch with `--args -ApplePersistenceIgnoreState YES` to skip window restoration
   (otherwise previously open PDFs reopen and the welcome window stays hidden). When relaunching,
   wait for the old process to exit first; `open` sent to a terminating instance does nothing.
-- To test sandbox behavior, run the app from an `xcodebuild build`: a `test` build adds a read-anywhere
-  exception for the test host. Each rebuild re-signs the app, which drops its Open Recent access.
 - Tests cover `KeelCore` only. UI changes need a manual check in the running app.
 
 ## Architecture
@@ -30,8 +28,6 @@ Notes for anyone (human or agent) changing this codebase. Keep this file short a
 - `WelcomeWindowController` is shown at launch and on Dock reopen when no document window is visible;
   it closes itself when a document window becomes main.
 - `DocumentOpener` is the single place for opening URLs and filtering dropped files to PDFs.
-  `AppDelegate.application(_:open:)` sends it both file URLs and `keel://` page links (`PageLink`
-  in `KeelCore`); because that method exists, AppKit no longer opens files on its own.
 - Put logic that doesn't need AppKit/PDFKit in `KeelCore` so it can be unit tested.
 
 ## Conventions

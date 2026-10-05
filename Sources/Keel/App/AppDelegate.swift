@@ -1,5 +1,4 @@
 import AppKit
-import KeelCore
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -16,20 +15,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return
       }
       WelcomeWindowController.shared.show()
-    }
-  }
-
-  // Implementing this routes Finder and `open` file requests here instead of to
-  // NSDocumentController, so file URLs must be opened explicitly.
-  func application(_ application: NSApplication, open urls: [URL]) {
-    for url in urls {
-      if url.isFileURL {
-        DocumentOpener.open(url)
-      } else if let link = PageLink(url: url) {
-        DocumentOpener.open(link)
-      } else {
-        NSSound.beep()
-      }
     }
   }
 

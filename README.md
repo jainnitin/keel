@@ -11,18 +11,6 @@ Keel never edits, annotates, decrypts to disk, or saves over the source PDF.
 - Sidebar with page thumbnails, table of contents, and search results
 - Password-protected PDFs, with optional Keychain storage per document
 - Reading position, zoom, layout, and sidebar state restored per document
-- Deep links to a page (`keel://`), with **Copy Link to Page** in the Document Options menu
-
-## Deep links
-
-```text
-keel://open?file=<percent-encoded absolute path>&page=<page number>
-```
-
-`page` is 1-based and optional; numbers past the end open the last page. If the document is already
-open, Keel brings its window forward and goes to the page. Because Keel is sandboxed, it can open
-linked files from Open Recent directly; for any other file it asks you to confirm the file in an
-Open panel first.
 
 ## Requirements
 
@@ -61,13 +49,12 @@ swift test
 | Actual size | `⌘0` |
 | Fit to width | `⌘9` |
 | Toggle sidebar | `⌃⌘S` |
-| Copy link to page | `⌥⌘C` |
 
 ## Project layout
 
 ```text
 Sources/Keel/         macOS app: AppKit/SwiftUI UI, PDFKit, Keychain
-Sources/KeelCore/     Pure logic with no UI dependencies: identity, reader state, search excerpts, page links
+Sources/KeelCore/     Pure logic with no UI dependencies: identity, reader state, search excerpts
 Tests/KeelCoreTests/  Unit tests for KeelCore
 Keel/                 Info.plist and sandbox entitlements
 ```
