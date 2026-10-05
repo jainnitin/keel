@@ -105,3 +105,10 @@ LeafPDF/                  Info.plist and sandbox entitlements
 ```
 
 The app sandbox grants only user-selected read access. Leaf PDF has no network dependency and uses Apple frameworks exclusively.
+
+To regenerate the original AppIcon asset set after changing its source drawing:
+
+```sh
+swift Tools/generate_app_icon.swift \
+  Sources/LeafPDF/Resources/Assets.xcassets/AppIcon.appiconset
+```
