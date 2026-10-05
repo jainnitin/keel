@@ -140,9 +140,9 @@ final class PDFViewController: NSObject, ObservableObject {
       return
     }
     isDark = darkPages
-    pdfView.wantsLayer = true
-    pdfView.layerUsesCoreImageFilters = true
     if darkPages {
+      pdfView.wantsLayer = true
+      pdfView.layerUsesCoreImageFilters = true
       let hue = CIFilter(name: "CIHueAdjust", parameters: [kCIInputAngleKey: Double.pi])
       pdfView.layer?.filters = [CIFilter(name: "CIColorInvert"), hue].compactMap { $0 }
       // The filter inverts this too, so it ends up as a dark gray surround.
