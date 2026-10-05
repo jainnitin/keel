@@ -181,8 +181,10 @@ private struct ReaderToolbar: ToolbarContent {
 
       Picker("Page Layout", selection: $model.layout) {
         Label("Continuous", systemImage: "rectangle.stack")
+          .accessibilityLabel("Continuous scrolling")
           .tag(ReaderLayout.continuous)
         Label("Single Page", systemImage: "rectangle")
+          .accessibilityLabel("Single page")
           .tag(ReaderLayout.singlePage)
       }
       .pickerStyle(.segmented)

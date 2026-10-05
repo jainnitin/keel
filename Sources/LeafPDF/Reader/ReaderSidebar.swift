@@ -7,32 +7,71 @@ struct ReaderSidebar: View {
 
   var body: some View {
     VStack(spacing: 0) {
-      Picker("Sidebar", selection: $model.sidebarSection) {
-        Label("Thumbnails", systemImage: "rectangle.stack")
+      SidebarSectionPicker(selection: $model.sidebarSection)
+        .padding()
+
+      Divider()
+
+      Group {
+        switch model.sidebarSection {
+        case .thumbnails:
+          ThumbnailSidebar(model: model)
+        case .outline:
+          OutlineSidebar(model: model)
+        case .search:
+          SearchResultsSidebar(model: model)
+        }
+      }
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .accessibilityIdentifier("reader.sidebar.content")
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    .background(.thinMaterial)
+    .accessibilityElement(children: .contain)
+    .accessibilityLabel("Document sidebar")
+  }
+}
+
+private struct SidebarSectionPicker: View {
+  @Binding var selection: ReaderSidebarSection
+
+  var body: some View {
+    ViewThatFits(in: .horizontal) {
+      Picker("Sidebar", selection: $selection) {
+        Text("Thumbnails")
           .tag(ReaderSidebarSection.thumbnails)
-        Label("Contents", systemImage: "list.bullet.indent")
+        Text("Contents")
           .tag(ReaderSidebarSection.outline)
-        Label("Search", systemImage: "text.magnifyingglass")
+        Text("Search")
           .tag(ReaderSidebarSection.search)
       }
       .pickerStyle(.segmented)
       .labelsHidden()
-      .padding()
+      .frame(width: 244)
 
-      Divider()
-
-      switch model.sidebarSection {
-      case .thumbnails:
-        ThumbnailSidebar(model: model)
-      case .outline:
-        OutlineSidebar(model: model)
-      case .search:
-        SearchResultsSidebar(model: model)
+      Picker("Sidebar", selection: $selection) {
+        Label("Thumbnails", systemImage: "rectangle.stack")
+          .labelStyle(.iconOnly)
+          .help("Thumbnails")
+          .accessibilityLabel("Thumbnails")
+          .tag(ReaderSidebarSection.thumbnails)
+        Label("Contents", systemImage: "list.bullet.indent")
+          .labelStyle(.iconOnly)
+          .help("Contents")
+          .accessibilityLabel("Contents")
+          .tag(ReaderSidebarSection.outline)
+        Label("Search", systemImage: "text.magnifyingglass")
+          .labelStyle(.iconOnly)
+          .help("Search")
+          .accessibilityLabel("Search")
+          .tag(ReaderSidebarSection.search)
       }
+      .pickerStyle(.segmented)
+      .labelsHidden()
+      .frame(maxWidth: 160)
     }
-    .background(.thinMaterial)
-    .accessibilityElement(children: .contain)
-    .accessibilityLabel("Document sidebar")
+    .frame(maxWidth: .infinity)
+    .accessibilityIdentifier("reader.sidebar.sectionPicker")
   }
 }
 
@@ -147,6 +186,7 @@ private struct OutlineSidebar: View {
         } label: {
           Text(item.title)
             .lineLimit(2)
+            .foregroundStyle(Color(nsColor: .labelColor))
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .buttonStyle(.plain)
@@ -189,9 +229,10 @@ private struct SearchResultsSidebar: View {
             VStack(alignment: .leading, spacing: 4) {
               Text("Page \(result.pageLabel)")
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color(nsColor: .secondaryLabelColor))
               Text(result.excerpt)
                 .font(.callout)
+                .foregroundStyle(Color(nsColor: .labelColor))
                 .lineLimit(4)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
