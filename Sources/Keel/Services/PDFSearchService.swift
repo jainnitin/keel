@@ -17,6 +17,8 @@ private struct PDFSearchMatch: @unchecked Sendable {
 final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
   @Published private(set) var results: [PDFSearchResult] = []
   @Published private(set) var isSearching = false
+  /// `nil` until `detectTextLayer()` has run; `false` for scanned, image-only documents.
+  @Published private(set) var hasSearchableText: Bool?
 
   private weak var document: PDFDocument?
   private var selections: [Int: PDFSelection] = [:]
@@ -50,6 +52,16 @@ final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
       self.query,
       withOptions: [.caseInsensitive, .diacriticInsensitive]
     )
+  }
+
+  /// Checks once whether the document has any text to search. Safe to call repeatedly.
+  func detectTextLayer() async {
+    guard hasSearchableText == nil, let document else {
+      return
+    }
+    if let detected = await TextLayerDetector.hasSearchableText(in: document) {
+      hasSearchableText = detected
+    }
   }
 
   func selection(for result: PDFSearchResult) -> PDFSelection? {

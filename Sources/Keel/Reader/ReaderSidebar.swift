@@ -222,6 +222,14 @@ private struct SearchResultsSidebar: View {
       if searchService.results.isEmpty, searchService.isSearching {
         ProgressView("Searching…")
           .frame(maxWidth: .infinity, maxHeight: .infinity)
+      } else if searchService.results.isEmpty, searchService.hasSearchableText == false {
+        ContentUnavailableView(
+          "This PDF Has No Searchable Text",
+          systemImage: "doc.text.viewfinder",
+          description: Text(
+            "It appears to be scanned images, so its text can’t be searched or selected."
+          )
+        )
       } else if searchService.results.isEmpty {
         ContentUnavailableView.search(text: model.searchQuery)
       } else {
@@ -248,6 +256,9 @@ private struct SearchResultsSidebar: View {
       }
     }
     .accessibilityLabel("Search results")
+    .task {
+      await searchService.detectTextLayer()
+    }
   }
 }
 
