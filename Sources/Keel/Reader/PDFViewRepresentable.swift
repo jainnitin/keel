@@ -8,7 +8,7 @@ struct PDFViewRepresentable: NSViewRepresentable {
   let controller: PDFViewController
 
   func makeNSView(context: Context) -> PDFView {
-    let view = PDFView()
+    let view = KeelPDFView()
     controller.attach(view, document: document, layout: layout)
     return view
   }
