@@ -1,6 +1,15 @@
-# Keel
+<p align="center">
+  <img src="Sources/Keel/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-128@2x.png" width="128" alt="Keel app icon">
+</p>
 
-[![CI](https://github.com/jainnitin/keel/actions/workflows/ci.yml/badge.svg)](https://github.com/jainnitin/keel/actions/workflows/ci.yml)
+<h1 align="center">Keel</h1>
+
+<p align="center">A focused, native, read-only PDF reader for Mac</p>
+
+<p align="center">
+  <a href="https://github.com/jainnitin/keel/actions/workflows/ci.yml"><img src="https://github.com/jainnitin/keel/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/jainnitin/keel/releases/latest"><img src="https://img.shields.io/github/v/release/jainnitin/keel?label=download" alt="Download"></a>
+</p>
 
 A focused, native, read-only PDF reader for Apple-silicon Macs, built with SwiftUI and PDFKit.
 
