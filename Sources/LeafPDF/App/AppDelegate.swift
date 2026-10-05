@@ -14,12 +14,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       else {
         return
       }
-      NSDocumentController.shared.openDocument(nil)
+      WelcomeWindowController.shared.show()
     }
   }
 
   func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
     false
+  }
+
+  func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+    if !flag {
+      WelcomeWindowController.shared.show()
+    }
+    return false
   }
 
   func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
