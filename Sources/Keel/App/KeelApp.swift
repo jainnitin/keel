@@ -187,13 +187,17 @@ private struct ReaderCommands: Commands {
 }
 
 private struct SettingsView: View {
+  @AppStorage(ReaderPreferences.darkPagesKey) private var darkPages = false
+
   var body: some View {
-    ContentUnavailableView(
-      "No Settings",
-      systemImage: "sailboat",
-      description: Text("Keel uses native macOS reading and accessibility settings.")
-    )
-    .frame(width: 420, height: 240)
-    .padding()
+    Form {
+      Toggle(isOn: $darkPages) {
+        Text("Dark pages")
+        Text("Show pages light-on-dark for reading at night. The PDF itself isn’t changed.")
+      }
+    }
+    .formStyle(.grouped)
+    .frame(width: 420)
+    .fixedSize(horizontal: false, vertical: true)
   }
 }
