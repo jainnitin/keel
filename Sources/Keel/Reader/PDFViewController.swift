@@ -7,6 +7,8 @@ final class PDFViewController: NSObject, ObservableObject {
   @Published private(set) var currentPageIndex = 0
   @Published private(set) var scaleFactor = 1.0
   @Published private(set) var autoScales = true
+  @Published private(set) var canGoBack = false
+  @Published private(set) var canGoForward = false
 
   var onStateChange: (() -> Void)?
 
@@ -14,6 +16,7 @@ final class PDFViewController: NSObject, ObservableObject {
   private weak var document: PDFDocument?
   private var pageObserver: NSObjectProtocol?
   private var scaleObserver: NSObjectProtocol?
+  private var historyObserver: NSObjectProtocol?
   private var currentLayout: ReaderLayout?
   private var restoredState: ReaderState?
 
@@ -52,12 +55,17 @@ final class PDFViewController: NSObject, ObservableObject {
     if let scaleObserver {
       NotificationCenter.default.removeObserver(scaleObserver)
     }
+    if let historyObserver {
+      NotificationCenter.default.removeObserver(historyObserver)
+    }
     pageObserver = nil
     scaleObserver = nil
+    historyObserver = nil
     pdfView?.document = nil
     pdfView = nil
     document = nil
     currentLayout = nil
+    updateHistoryState()
   }
 
   func restore(_ state: ReaderState) {
@@ -107,6 +115,15 @@ final class PDFViewController: NSObject, ObservableObject {
       return
     }
     pdfView?.go(to: page)
+  }
+
+  /// Returns to the location before the last jump (a link, contents entry, or search result).
+  func goBack() {
+    pdfView?.goBack(nil)
+  }
+
+  func goForward() {
+    pdfView?.goForward(nil)
   }
 
   func go(to selection: PDFSelection) {
@@ -185,6 +202,15 @@ final class PDFViewController: NSObject, ObservableObject {
         self?.updatePublishedState()
       }
     }
+    historyObserver = NotificationCenter.default.addObserver(
+      forName: .PDFViewChangedHistory,
+      object: view,
+      queue: .main
+    ) { [weak self] _ in
+      MainActor.assumeIsolated {
+        self?.updateHistoryState()
+      }
+    }
   }
 
   private func updatePublishedState() {
@@ -200,5 +226,10 @@ final class PDFViewController: NSObject, ObservableObject {
     scaleFactor = pdfView.scaleFactor
     autoScales = pdfView.autoScales
     onStateChange?()
+  }
+
+  private func updateHistoryState() {
+    canGoBack = pdfView?.canGoBack ?? false
+    canGoForward = pdfView?.canGoForward ?? false
   }
 }

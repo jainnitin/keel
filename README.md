@@ -41,18 +41,6 @@ swift build
 swift test
 ```
 
-## Keyboard shortcuts
-
-| Action | Shortcut |
-| --- | --- |
-| Open | `⌘O` |
-| Welcome window | `⇧⌘1` |
-| Previous / next page | `Page Up` / `Page Down` |
-| Zoom in / out | `⌘+` / `⌘-` |
-| Actual size | `⌘0` |
-| Fit to width | `⌘9` |
-| Toggle sidebar | `⌃⌘S` |
-
 ## Project layout
 
 ```text

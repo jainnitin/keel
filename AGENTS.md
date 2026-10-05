@@ -28,6 +28,9 @@ Notes for anyone (human or agent) changing this codebase. Keep this file short a
 - `WelcomeWindowController` is shown at launch and on Dock reopen when no document window is visible;
   it closes itself when a document window becomes main.
 - `DocumentOpener` is the single place for opening URLs and filtering dropped files to PDFs.
+- Menu commands reach the reader through `ActiveReader`, which follows the main window's
+  `KeelDocument` and republishes its reader's changes. Shortcuts live on menu items in `KeelApp`,
+  not on toolbar controls.
 - Put logic that doesn't need AppKit/PDFKit in `KeelCore` so it can be unit tested.
 
 ## Conventions
@@ -41,6 +44,7 @@ Notes for anyone (human or agent) changing this codebase. Keep this file short a
 - Present user-facing errors through `ReaderViewModel.present(_:title:)` inside a document window,
   or `NSApplication.presentError` outside one.
 - Two-space indentation; match the surrounding style. Prefer native macOS controls and SF Symbols.
+- Don't list keyboard shortcuts in README.md; the app's menus show them.
 
 ## Workflow
 

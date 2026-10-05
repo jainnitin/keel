@@ -8,7 +8,7 @@ import SwiftUI
 final class KeelDocument: NSDocument {
   nonisolated(unsafe) private(set) var pdfDocument: PDFDocument?
   nonisolated(unsafe) private(set) var documentIdentity: DocumentIdentity?
-  private var readerViewModel: ReaderViewModel?
+  private(set) var readerViewModel: ReaderViewModel?
 
   override class var autosavesInPlace: Bool {
     false

@@ -5,6 +5,12 @@ import PDFKit
 
 @MainActor
 final class ReaderViewModel: ObservableObject {
+  /// A control that a menu command asks the reader window to focus.
+  enum FocusTarget {
+    case search
+    case pageField
+  }
+
   enum AccessState: Equatable {
     case preparing
     case locked
@@ -39,6 +45,9 @@ final class ReaderViewModel: ObservableObject {
     }
   }
   @Published var searchQuery = ""
+  @Published var focusRequest: FocusTarget?
+  /// Index into `searchService.results` of the result last shown with Find Next/Previous.
+  private(set) var currentResultIndex: Int?
   @Published var isPasswordPromptPresented = false
   @Published var passwordError: String?
   @Published private(set) var hasSavedPassword = false
@@ -103,6 +112,7 @@ final class ReaderViewModel: ObservableObject {
 
   func updateSearchQuery() {
     searchTask?.cancel()
+    currentResultIndex = nil
     let query = searchQuery
     if hasSearchQuery {
       sidebarSection = .search
@@ -184,11 +194,29 @@ final class ReaderViewModel: ObservableObject {
   }
 
   func goToSearchResult(_ result: PDFSearchResult) {
+    currentResultIndex = searchService.results.firstIndex(of: result)
     guard let selection = searchService.selection(for: result) else {
       viewer.go(toPageIndex: result.pageIndex)
       return
     }
     viewer.go(to: selection)
+  }
+
+  /// Steps through search results, wrapping around; `offset` is 1 for next and -1 for previous.
+  func showSearchResult(offset: Int) {
+    let results = searchService.results
+    guard !results.isEmpty else {
+      NSSound.beep()
+      return
+    }
+    let index =
+      currentResultIndex.map { ($0 + offset + results.count) % results.count }
+      ?? (offset > 0 ? 0 : results.count - 1)
+    goToSearchResult(results[index])
+  }
+
+  func toggleSidebar() {
+    sidebarVisible.toggle()
   }
 
   func tearDown() {

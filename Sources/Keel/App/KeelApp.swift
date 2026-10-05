@@ -1,4 +1,5 @@
 import AppKit
+import KeelCore
 import SwiftUI
 
 @main
@@ -11,6 +12,7 @@ struct KeelApp: App {
     }
     .commands {
       DocumentCommands()
+      ReaderCommands()
     }
   }
 }
@@ -57,6 +59,114 @@ private struct DocumentCommands: Commands {
       .keyboardShortcut("1", modifiers: [.command, .shift])
       Divider()
     }
+  }
+}
+
+/// Reader commands, which act on the main window's reader through `ActiveReader`.
+private struct ReaderCommands: Commands {
+  @ObservedObject private var activeReader = ActiveReader.shared
+
+  private var model: ReaderViewModel? {
+    activeReader.model
+  }
+
+  var body: some Commands {
+    CommandGroup(replacing: .textEditing) {
+      Menu("Find") {
+        Button("Find…") {
+          model?.focusRequest = .search
+        }
+        .keyboardShortcut("f", modifiers: .command)
+        Button("Find Next") {
+          model?.showSearchResult(offset: 1)
+        }
+        .keyboardShortcut("g", modifiers: .command)
+        Button("Find Previous") {
+          model?.showSearchResult(offset: -1)
+        }
+        .keyboardShortcut("g", modifiers: [.command, .shift])
+      }
+      .disabled(model == nil)
+    }
+
+    CommandGroup(replacing: .sidebar) {
+      Button(model?.sidebarVisible == true ? "Hide Sidebar" : "Show Sidebar") {
+        model?.toggleSidebar()
+      }
+      .keyboardShortcut("s", modifiers: [.command, .control])
+      .disabled(model == nil)
+    }
+
+    CommandGroup(before: .toolbar) {
+      Group {
+        Button("Zoom In") {
+          model?.viewer.zoomIn()
+        }
+        .keyboardShortcut("+", modifiers: .command)
+        Button("Zoom Out") {
+          model?.viewer.zoomOut()
+        }
+        .keyboardShortcut("-", modifiers: .command)
+        Button("Actual Size") {
+          model?.viewer.actualSize()
+        }
+        .keyboardShortcut("0", modifiers: .command)
+        Button("Zoom to Fit") {
+          model?.viewer.zoomToFit()
+        }
+        .keyboardShortcut("9", modifiers: .command)
+        Button("Fit Width") {
+          model?.viewer.fitToWidth()
+        }
+        .keyboardShortcut("9", modifiers: [.command, .option])
+      }
+      .disabled(model == nil)
+      Divider()
+      Picker("Page Layout", selection: layout) {
+        Text("Continuous").tag(ReaderLayout.continuous)
+        Text("Single Page").tag(ReaderLayout.singlePage)
+      }
+      .pickerStyle(.inline)
+      .labelsHidden()
+      .disabled(model == nil)
+      Divider()
+    }
+
+    CommandMenu("Go") {
+      Button("Previous Page") {
+        model?.viewer.previousPage()
+      }
+      .keyboardShortcut(.upArrow, modifiers: .option)
+      .disabled((model?.viewer.currentPageIndex ?? 0) <= 0)
+      Button("Next Page") {
+        model?.viewer.nextPage()
+      }
+      .keyboardShortcut(.downArrow, modifiers: .option)
+      .disabled(model.map { $0.viewer.currentPageIndex >= $0.pageCount - 1 } ?? true)
+      Button("Go to Page…") {
+        model?.focusRequest = .pageField
+      }
+      .keyboardShortcut("g", modifiers: [.command, .option])
+      .disabled(model == nil)
+      Divider()
+      Button("Back") {
+        model?.viewer.goBack()
+      }
+      .keyboardShortcut("[", modifiers: .command)
+      .disabled(model?.viewer.canGoBack != true)
+      Button("Forward") {
+        model?.viewer.goForward()
+      }
+      .keyboardShortcut("]", modifiers: .command)
+      .disabled(model?.viewer.canGoForward != true)
+    }
+  }
+
+  private var layout: Binding<ReaderLayout> {
+    Binding(
+      get: { model?.layout ?? .continuous },
+      set: { model?.layout = $0 }
+    )
   }
 }
 

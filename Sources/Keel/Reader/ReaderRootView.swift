@@ -6,6 +6,7 @@ import SwiftUI
 struct ReaderRootView: View {
   @ObservedObject var model: ReaderViewModel
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
+  @FocusState private var isSearchFocused: Bool
 
   var body: some View {
     Group {
@@ -84,6 +85,14 @@ struct ReaderRootView: View {
       placement: .toolbar,
       prompt: "Search PDF"
     )
+    .searchFocused($isSearchFocused)
+    .onChange(of: model.focusRequest, initial: true) { _, request in
+      guard request == .search else {
+        return
+      }
+      isSearchFocused = true
+      model.focusRequest = nil
+    }
     .onChange(of: model.searchQuery) {
       model.updateSearchQuery()
     }
@@ -114,12 +123,12 @@ private struct ReaderShareToolbar: ToolbarContent {
 private struct ReaderToolbar: ToolbarContent {
   @ObservedObject var model: ReaderViewModel
   @ObservedObject private var viewer: PDFViewController
-  @State private var pageText: String
+  @State private var pageText = ""
+  @FocusState private var isPageFieldFocused: Bool
 
   init(model: ReaderViewModel) {
     self.model = model
     viewer = model.viewer
-    _pageText = State(initialValue: String(model.viewer.currentPageIndex + 1))
   }
 
   var body: some ToolbarContent {
@@ -129,26 +138,25 @@ private struct ReaderToolbar: ToolbarContent {
       }
       .disabled(viewer.currentPageIndex <= 0)
       .help("Previous page")
-      .keyboardShortcut(.pageUp, modifiers: [])
 
       Button(action: viewer.nextPage) {
         Label("Next Page", systemImage: "chevron.down")
       }
       .disabled(viewer.currentPageIndex >= model.pageCount - 1)
       .help("Next page")
-      .keyboardShortcut(.pageDown, modifiers: [])
 
       HStack(spacing: 5) {
         TextField("Page", text: $pageText)
           .textFieldStyle(.roundedBorder)
           .multilineTextAlignment(.trailing)
           .frame(width: 48)
+          .focused($isPageFieldFocused)
           .accessibilityLabel("Current page")
           .onSubmit {
             if let page = Int(pageText), (1...model.pageCount).contains(page) {
               viewer.go(toPageIndex: page - 1)
             } else {
-              pageText = String(viewer.currentPageIndex + 1)
+              showCurrentPage()
               NSSound.beep()
             }
           }
@@ -156,8 +164,21 @@ private struct ReaderToolbar: ToolbarContent {
           .foregroundStyle(.secondary)
           .monospacedDigit()
       }
-      .onChange(of: viewer.currentPageIndex) { _, pageIndex in
-        pageText = String(pageIndex + 1)
+      // `initial` matters: a restored position can change the page before the first render.
+      .onChange(of: viewer.currentPageIndex, initial: true) {
+        showCurrentPage()
+      }
+      .onChange(of: isPageFieldFocused) { _, isFocused in
+        if !isFocused {
+          showCurrentPage()
+        }
+      }
+      .onChange(of: model.focusRequest, initial: true) { _, request in
+        guard request == .pageField else {
+          return
+        }
+        isPageFieldFocused = true
+        model.focusRequest = nil
       }
       .accessibilityElement(children: .contain)
 
@@ -165,22 +186,21 @@ private struct ReaderToolbar: ToolbarContent {
         Label("Zoom Out", systemImage: "minus.magnifyingglass")
       }
       .help("Zoom out")
-      .keyboardShortcut("-", modifiers: .command)
 
       Button(action: viewer.zoomIn) {
         Label("Zoom In", systemImage: "plus.magnifyingglass")
       }
       .help("Zoom in")
-      .keyboardShortcut("+", modifiers: .command)
 
       Menu {
+        Button("Zoom to Fit", action: viewer.zoomToFit)
         Button("Actual Size", action: viewer.actualSize)
-          .keyboardShortcut("0", modifiers: .command)
-        Button("Fit to Width", action: viewer.fitToWidth)
-          .keyboardShortcut("9", modifiers: .command)
+        Button("Fit Width", action: viewer.fitToWidth)
       } label: {
-        Label("Zoom Options", systemImage: "magnifyingglass")
+        Text(viewer.scaleFactor, format: .percent.precision(.fractionLength(0)))
+          .monospacedDigit()
       }
+      .accessibilityLabel("Zoom")
       .help("Zoom options")
 
       Picker("Page Layout", selection: $model.layout) {
@@ -205,5 +225,9 @@ private struct ReaderToolbar: ToolbarContent {
       }
       .help("Document options")
     }
+  }
+
+  private func showCurrentPage() {
+    pageText = String(viewer.currentPageIndex + 1)
   }
 }
