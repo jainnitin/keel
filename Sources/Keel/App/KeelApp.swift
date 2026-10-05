@@ -43,6 +43,13 @@ private struct DocumentCommands: Commands {
 
     CommandGroup(replacing: .saveItem) {}
 
+    CommandGroup(replacing: .printItem) {
+      Button("Print…") {
+        NSApp.sendAction(#selector(NSDocument.printDocument(_:)), to: nil, from: nil)
+      }
+      .keyboardShortcut("p", modifiers: .command)
+    }
+
     CommandGroup(before: .windowList) {
       Button("Welcome to Keel") {
         WelcomeWindowController.shared.show()

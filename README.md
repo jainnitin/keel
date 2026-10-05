@@ -12,6 +12,7 @@ Keel never edits, annotates, decrypts to disk, or saves over the source PDF.
 - Continuous or single-page layout, zoom, fit to width, page entry
 - Sidebar with page thumbnails, table of contents, and search results
 - Password-protected PDFs, with optional Keychain storage per document
+- Print through the standard print panel, and share the original PDF with AirDrop, Mail, Messages, and other services
 - Reading position, zoom, layout, and sidebar state restored per document
 
 ## Requirements

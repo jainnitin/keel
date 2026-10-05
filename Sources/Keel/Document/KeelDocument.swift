@@ -84,6 +84,32 @@ final class KeelDocument: NSDocument {
     addWindowController(windowController)
   }
 
+  override func printOperation(
+    withSettings printSettings: [NSPrintInfo.AttributeKey: Any]
+  ) throws -> NSPrintOperation {
+    guard let pdfDocument else {
+      throw KeelDocumentError.printUnavailable("The document is no longer open.")
+    }
+    guard !pdfDocument.isLocked else {
+      throw KeelDocumentError.printUnavailable("Unlock the document with its password before printing.")
+    }
+    let printInfo = (self.printInfo.copy() as? NSPrintInfo) ?? NSPrintInfo.shared
+    for (key, value) in printSettings {
+      printInfo.dictionary()[key] = value
+    }
+    guard
+      let operation = pdfDocument.printOperation(
+        for: printInfo,
+        scalingMode: .pageScaleDownToFit,
+        autoRotate: true
+      )
+    else {
+      throw KeelDocumentError.printUnavailable("PDFKit could not prepare the document for printing.")
+    }
+    operation.jobTitle = displayName
+    return operation
+  }
+
   override func close() {
     readerViewModel?.tearDown()
     readerViewModel = nil
@@ -97,6 +123,7 @@ enum KeelDocumentError: LocalizedError {
   case inaccessible(URL, underlying: Error)
   case malformed(URL)
   case unsupportedEncryption(URL)
+  case printUnavailable(String)
 
   var errorDescription: String? {
     switch self {
@@ -106,6 +133,8 @@ enum KeelDocumentError: LocalizedError {
       "“\(url.lastPathComponent)” is not a valid PDF or is corrupted."
     case .unsupportedEncryption(let url):
       "“\(url.lastPathComponent)” uses PDF encryption that this version of macOS cannot open."
+    case .printUnavailable:
+      "This document cannot be printed."
     }
   }
 
@@ -117,6 +146,8 @@ enum KeelDocumentError: LocalizedError {
       "PDFKit could not read the document structure."
     case .unsupportedEncryption:
       "The document is encrypted, but PDFKit cannot decode its encryption format."
+    case .printUnavailable(let reason):
+      reason
     }
   }
 
@@ -128,6 +159,8 @@ enum KeelDocumentError: LocalizedError {
       "Try opening a known-good copy of the PDF."
     case .unsupportedEncryption:
       "Ask the document owner for a PDF using a supported encryption format."
+    case .printUnavailable:
+      nil
     }
   }
 }

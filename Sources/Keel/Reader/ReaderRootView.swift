@@ -95,6 +95,18 @@ struct ReaderRootView: View {
     }
     .toolbar {
       ReaderToolbar(model: model)
+      ReaderShareToolbar(model: model)
+    }
+  }
+}
+
+private struct ReaderShareToolbar: ToolbarContent {
+  let model: ReaderViewModel
+
+  var body: some ToolbarContent {
+    ToolbarItem(placement: .primaryAction) {
+      ShareLink(item: model.sourceURL)
+        .help("Share")
     }
   }
 }
