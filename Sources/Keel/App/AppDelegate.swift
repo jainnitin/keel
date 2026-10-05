@@ -18,6 +18,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
   }
 
+  func applicationWillTerminate(_ notification: Notification) {
+    // Documents aren't closed on quit, so write any reading position still waiting to be saved.
+    for case let document as KeelDocument in NSDocumentController.shared.documents {
+      document.readerViewModel?.flushPendingSave()
+    }
+  }
+
   func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
     false
   }

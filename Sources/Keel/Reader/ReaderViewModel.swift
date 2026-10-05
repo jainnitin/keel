@@ -229,7 +229,6 @@ final class ReaderViewModel: ObservableObject {
     unlockTask?.cancel()
     passwordTask?.cancel()
     searchTask?.cancel()
-    stateSaveTask?.cancel()
     searchService.tearDown()
     viewer.detach()
     Task { [thumbnailService] in
@@ -318,7 +317,12 @@ final class ReaderViewModel: ObservableObject {
     guard accessState == .ready, !isTornDown else {
       return
     }
-    stateSaveTask?.cancel()
+    if let stateSaveTask {
+      stateSaveTask.cancel()
+    } else {
+      // A pending save must not be lost if the system kills the app (logout, restart).
+      ProcessInfo.processInfo.disableSuddenTermination()
+    }
     stateSaveTask = Task { [weak self] in
       try? await Task.sleep(for: .milliseconds(400))
       guard !Task.isCancelled else {
@@ -328,7 +332,24 @@ final class ReaderViewModel: ObservableObject {
     }
   }
 
+  /// Writes a debounced save that hasn't run yet, e.g. when the app quits.
+  func flushPendingSave() {
+    guard stateSaveTask != nil else {
+      return
+    }
+    saveStateNow()
+  }
+
   private func saveStateNow() {
+    let hadPendingSave = stateSaveTask != nil
+    stateSaveTask?.cancel()
+    stateSaveTask = nil
+    defer {
+      // Only after writing: during quit, re-enabling lets AppKit kill the process at once.
+      if hadPendingSave {
+        ProcessInfo.processInfo.enableSuddenTermination()
+      }
+    }
     guard accessState == .ready else {
       return
     }
