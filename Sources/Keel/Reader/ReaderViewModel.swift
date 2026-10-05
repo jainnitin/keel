@@ -31,6 +31,12 @@ final class ReaderViewModel: ObservableObject {
       scheduleStateSave()
     }
   }
+  @Published var showsCoverSeparately = false {
+    didSet {
+      viewer.apply(showsCoverSeparately: showsCoverSeparately)
+      scheduleStateSave()
+    }
+  }
   @Published var sidebarSection: ReaderSidebarSection = .thumbnails {
     didSet {
       if sidebarSection != .search {
@@ -306,6 +312,7 @@ final class ReaderViewModel: ObservableObject {
       present(error, title: "Reading Position Could Not Be Restored")
     }
     layout = restored.layout
+    showsCoverSeparately = restored.showsCoverSeparately
     // The search query isn't persisted, so never reopen onto an empty Search section.
     sidebarSection = restored.sidebarSection == .search ? .thumbnails : restored.sidebarSection
     sidebarVisible = restored.sidebarVisible
@@ -358,6 +365,7 @@ final class ReaderViewModel: ObservableObject {
       autoScales: viewer.autoScales,
       scaleFactor: viewer.scaleFactor,
       layout: layout,
+      showsCoverSeparately: showsCoverSeparately,
       sidebarSection: browsingSection,
       sidebarVisible: sidebarVisible
     )

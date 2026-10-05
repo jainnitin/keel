@@ -1,4 +1,5 @@
 import AppKit
+import CoreImage
 import KeelCore
 import PDFKit
 
@@ -19,11 +20,20 @@ final class PDFViewController: NSObject, ObservableObject {
   private var historyObserver: NSObjectProtocol?
   private var mouseButtonMonitor: Any?
   private var currentLayout: ReaderLayout?
+  private var isDark: Bool?
   private var restoredState: ReaderState?
 
-  func attach(_ view: PDFView, document: PDFDocument, layout: ReaderLayout) {
+  func attach(
+    _ view: PDFView,
+    document: PDFDocument,
+    layout: ReaderLayout,
+    showsCoverSeparately: Bool,
+    darkPages: Bool
+  ) {
     guard pdfView !== view else {
       apply(layout: layout)
+      apply(showsCoverSeparately: showsCoverSeparately)
+      apply(darkPages: darkPages)
       return
     }
 
@@ -39,6 +49,8 @@ final class PDFViewController: NSObject, ObservableObject {
     view.autoScales = true
     view.setAccessibilityLabel("PDF document")
     apply(layout: layout)
+    apply(showsCoverSeparately: showsCoverSeparately)
+    apply(darkPages: darkPages)
     installObservers(for: view)
 
     if let restoredState {
@@ -70,6 +82,7 @@ final class PDFViewController: NSObject, ObservableObject {
     pdfView = nil
     document = nil
     currentLayout = nil
+    isDark = nil
     updateHistoryState()
   }
 
@@ -79,6 +92,7 @@ final class PDFViewController: NSObject, ObservableObject {
       return
     }
     apply(layout: state.layout)
+    apply(showsCoverSeparately: state.showsCoverSeparately)
     if let page = document.page(at: state.pageIndex) {
       pdfView.go(to: page)
     }
@@ -104,6 +118,38 @@ final class PDFViewController: NSObject, ObservableObject {
     case .singlePage:
       pdfView.displayMode = .singlePage
       pdfView.displayDirection = .horizontal
+    case .twoPages:
+      pdfView.displayMode = .twoUp
+      pdfView.displayDirection = .horizontal
+    case .twoPagesContinuous:
+      pdfView.displayMode = .twoUpContinuous
+      pdfView.displayDirection = .vertical
+    }
+  }
+
+  func apply(showsCoverSeparately: Bool) {
+    pdfView?.displaysAsBook = showsCoverSeparately
+  }
+
+  /// Renders pages light-on-dark by inverting the view's rendering and rotating hue back, so
+  /// text and white paper flip while photos keep roughly natural colors. The document is
+  /// untouched, and selection, links, and scrolling are unaffected because only the layer's
+  /// output is filtered.
+  func apply(darkPages: Bool) {
+    guard isDark != darkPages, let pdfView else {
+      return
+    }
+    isDark = darkPages
+    pdfView.wantsLayer = true
+    pdfView.layerUsesCoreImageFilters = true
+    if darkPages {
+      let hue = CIFilter(name: "CIHueAdjust", parameters: [kCIInputAngleKey: Double.pi])
+      pdfView.layer?.filters = [CIFilter(name: "CIColorInvert"), hue].compactMap { $0 }
+      // The filter inverts this too, so it ends up as a dark gray surround.
+      pdfView.backgroundColor = NSColor(white: 0.85, alpha: 1)
+    } else {
+      pdfView.layer?.filters = nil
+      pdfView.backgroundColor = .windowBackgroundColor
     }
   }
 

@@ -9,7 +9,8 @@ Keel never edits, annotates, decrypts to disk, or saves over the source PDF.
 ## Features
 
 - One window per document; open from Finder, **File › Open**, **Open Recent**, drag and drop, or the welcome window
-- Continuous or single-page layout, zoom, fit to width, page entry
+- Continuous, single-page, and two-page layouts (with an optional separate cover), zoom, fit to width, page entry
+- Native full screen and an optional Dark Pages mode for night reading
 - Sidebar with page thumbnails, table of contents, and search results
 - Password-protected PDFs, with optional Keychain storage per document
 - Print through the standard print panel, and share the original PDF with AirDrop, Mail, Messages, and other services

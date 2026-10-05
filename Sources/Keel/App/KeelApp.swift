@@ -65,6 +65,7 @@ private struct DocumentCommands: Commands {
 /// Reader commands, which act on the main window's reader through `ActiveReader`.
 private struct ReaderCommands: Commands {
   @ObservedObject private var activeReader = ActiveReader.shared
+  @AppStorage(ReaderPreferences.darkPagesKey) private var darkPages = false
 
   private var model: ReaderViewModel? {
     activeReader.model
@@ -123,12 +124,17 @@ private struct ReaderCommands: Commands {
       .disabled(model == nil)
       Divider()
       Picker("Page Layout", selection: layout) {
-        Text("Continuous").tag(ReaderLayout.continuous)
-        Text("Single Page").tag(ReaderLayout.singlePage)
+        ForEach(ReaderLayout.allCases, id: \.self) { layout in
+          Text(layout.title).tag(layout)
+        }
       }
       .pickerStyle(.inline)
       .labelsHidden()
       .disabled(model == nil)
+      Toggle("Show Cover Separately", isOn: showsCover)
+        .disabled(model?.layout.isTwoPage != true)
+      Toggle("Dark Pages", isOn: $darkPages)
+        .keyboardShortcut("d", modifiers: [.command, .shift])
       Divider()
     }
 
@@ -160,6 +166,13 @@ private struct ReaderCommands: Commands {
       .keyboardShortcut("]", modifiers: .command)
       .disabled(model?.viewer.canGoForward != true)
     }
+  }
+
+  private var showsCover: Binding<Bool> {
+    Binding(
+      get: { model?.showsCoverSeparately ?? false },
+      set: { model?.showsCoverSeparately = $0 }
+    )
   }
 
   private var layout: Binding<ReaderLayout> {

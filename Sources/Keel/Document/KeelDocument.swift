@@ -72,6 +72,7 @@ final class KeelDocument: NSDocument {
     window.titlebarSeparatorStyle = .automatic
     window.toolbarStyle = .unified
     window.tabbingMode = .disallowed
+    window.collectionBehavior.insert(.fullScreenPrimary)
     window.isRestorable = true
     let frameAutosaveName = "Keel.DocumentWindow"
     let restoredFrame = window.setFrameUsingName(frameAutosaveName)

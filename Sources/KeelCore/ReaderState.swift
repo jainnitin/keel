@@ -3,6 +3,8 @@ import Foundation
 public enum ReaderLayout: String, Codable, CaseIterable, Sendable {
   case continuous
   case singlePage
+  case twoPages
+  case twoPagesContinuous
 }
 
 public enum ReaderSidebarSection: String, Codable, CaseIterable, Sendable {
@@ -17,6 +19,8 @@ public struct ReaderState: Codable, Equatable, Sendable {
   public var autoScales: Bool
   public var scaleFactor: Double
   public var layout: ReaderLayout
+  /// In the two-page layouts, shows the first page alone (a book cover) with spreads after it.
+  public var showsCoverSeparately: Bool
   public var sidebarSection: ReaderSidebarSection
   public var sidebarVisible: Bool
 
@@ -25,6 +29,7 @@ public struct ReaderState: Codable, Equatable, Sendable {
     autoScales: Bool = true,
     scaleFactor: Double = 1,
     layout: ReaderLayout = .continuous,
+    showsCoverSeparately: Bool = false,
     sidebarSection: ReaderSidebarSection = .thumbnails,
     sidebarVisible: Bool = true
   ) {
@@ -32,6 +37,7 @@ public struct ReaderState: Codable, Equatable, Sendable {
     self.autoScales = autoScales
     self.scaleFactor = scaleFactor
     self.layout = layout
+    self.showsCoverSeparately = showsCoverSeparately
     self.sidebarSection = sidebarSection
     self.sidebarVisible = sidebarVisible
   }
@@ -42,7 +48,10 @@ public struct ReaderState: Codable, Equatable, Sendable {
     pageIndex = try container.decode(Int.self, forKey: .pageIndex)
     autoScales = try container.decodeIfPresent(Bool.self, forKey: .autoScales) ?? true
     scaleFactor = try container.decode(Double.self, forKey: .scaleFactor)
-    layout = try container.decode(ReaderLayout.self, forKey: .layout)
+    // A layout written by a newer version falls back to the default instead of dropping the state.
+    layout = (try? container.decodeIfPresent(ReaderLayout.self, forKey: .layout)) ?? .continuous
+    showsCoverSeparately =
+      try container.decodeIfPresent(Bool.self, forKey: .showsCoverSeparately) ?? false
     sidebarSection = try container.decode(ReaderSidebarSection.self, forKey: .sidebarSection)
     sidebarVisible = try container.decode(Bool.self, forKey: .sidebarVisible)
   }

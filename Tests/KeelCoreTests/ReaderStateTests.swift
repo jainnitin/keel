@@ -25,6 +25,38 @@ final class ReaderStateTests: XCTestCase {
     XCTAssertEqual(state.sidebarSection, .outline)
   }
 
+  func testStateWithoutCoverOptionDecodesWithCoverNotSeparate() throws {
+    let json = """
+      {"pageIndex": 3, "scaleFactor": 2, "layout": "singlePage",
+       "sidebarSection": "outline", "sidebarVisible": false}
+      """
+    let state = try JSONDecoder().decode(ReaderState.self, from: Data(json.utf8))
+
+    XCTAssertFalse(state.showsCoverSeparately)
+    XCTAssertEqual(state.layout, .singlePage)
+  }
+
+  func testTwoPageLayoutAndCoverOptionRoundTrip() throws {
+    let original = ReaderState(
+      pageIndex: 4, layout: .twoPagesContinuous, showsCoverSeparately: true)
+    let data = try JSONEncoder().encode(original)
+    let decoded = try JSONDecoder().decode(ReaderState.self, from: data)
+
+    XCTAssertEqual(decoded, original)
+  }
+
+  func testUnknownLayoutKeepsTheRestOfTheSavedState() throws {
+    let json = """
+      {"pageIndex": 7, "scaleFactor": 1.5, "layout": "someFutureLayout",
+       "sidebarSection": "outline", "sidebarVisible": false}
+      """
+    let state = try JSONDecoder().decode(ReaderState.self, from: Data(json.utf8))
+
+    XCTAssertEqual(state.pageIndex, 7)
+    XCTAssertEqual(state.layout, .continuous)
+    XCTAssertEqual(state.sidebarSection, .outline)
+  }
+
   func testStateStoreEvictsLeastRecentlyUsedDocument() throws {
     let suiteName = "ReaderStateTests.\(UUID().uuidString)"
     let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))

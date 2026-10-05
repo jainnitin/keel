@@ -117,6 +117,7 @@ private struct ThumbnailCell: View {
   let action: () -> Void
 
   @Environment(\.displayScale) private var displayScale
+  @AppStorage(ReaderPreferences.darkPagesKey) private var darkPages = false
   @State private var image: CGImage?
   @State private var errorDescription: String?
 
@@ -131,6 +132,7 @@ private struct ThumbnailCell: View {
             Image(decorative: image, scale: displayScale)
               .resizable()
               .scaledToFit()
+              .modifier(DarkPagesFilter(isOn: darkPages))
           } else if errorDescription != nil {
             Image(systemName: "exclamationmark.triangle")
               .foregroundStyle(.secondary)
@@ -265,5 +267,18 @@ private struct SearchResultsSidebar: View {
 extension PDFOutlineNode {
   fileprivate var optionalChildren: [PDFOutlineNode]? {
     children.isEmpty ? nil : children
+  }
+}
+
+/// Matches the reader's Dark Pages rendering: invert, then rotate hue back so photos stay natural.
+private struct DarkPagesFilter: ViewModifier {
+  let isOn: Bool
+
+  func body(content: Content) -> some View {
+    if isOn {
+      content.colorInvert().hueRotation(.degrees(180))
+    } else {
+      content
+    }
   }
 }

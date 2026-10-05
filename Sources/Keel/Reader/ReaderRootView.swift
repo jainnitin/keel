@@ -7,6 +7,7 @@ struct ReaderRootView: View {
   @ObservedObject var model: ReaderViewModel
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
   @FocusState private var isSearchFocused: Bool
+  @AppStorage(ReaderPreferences.darkPagesKey) private var darkPages = false
 
   var body: some View {
     Group {
@@ -75,6 +76,8 @@ struct ReaderRootView: View {
       PDFViewRepresentable(
         document: model.document,
         layout: model.layout,
+        showsCoverSeparately: model.showsCoverSeparately,
+        darkPages: darkPages,
         controller: model.viewer
       )
       .ignoresSafeArea(.container, edges: .bottom)
@@ -203,17 +206,22 @@ private struct ReaderToolbar: ToolbarContent {
       .accessibilityLabel("Zoom")
       .help("Zoom options")
 
-      Picker("Page Layout", selection: $model.layout) {
-        Label("Continuous", systemImage: "rectangle.stack")
-          .accessibilityLabel("Continuous scrolling")
-          .tag(ReaderLayout.continuous)
-        Label("Single Page", systemImage: "rectangle")
-          .accessibilityLabel("Single page")
-          .tag(ReaderLayout.singlePage)
+      Menu {
+        Picker("Page Layout", selection: $model.layout) {
+          ForEach(ReaderLayout.allCases, id: \.self) { layout in
+            Label(layout.title, systemImage: layout.symbolName)
+              .tag(layout)
+          }
+        }
+        .pickerStyle(.inline)
+        Divider()
+        Toggle("Show Cover Separately", isOn: $model.showsCoverSeparately)
+          .disabled(!model.layout.isTwoPage)
+      } label: {
+        Label(model.layout.title, systemImage: model.layout.symbolName)
       }
-      .pickerStyle(.segmented)
-      .labelsHidden()
-      .help("Choose continuous or single-page layout")
+      .accessibilityLabel("Page layout")
+      .help("Choose the page layout")
 
       Menu {
         Button("Forget Saved Password", role: .destructive) {
