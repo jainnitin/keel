@@ -40,14 +40,9 @@ public struct ReaderState: Codable, Equatable, Sendable {
   }
 }
 
-public struct PersistedReaderState: Codable, Equatable, Sendable {
-  public var state: ReaderState
-  public var lastUsed: Date
-
-  public init(state: ReaderState, lastUsed: Date) {
-    self.state = state
-    self.lastUsed = lastUsed
-  }
+struct PersistedReaderState: Codable, Equatable, Sendable {
+  var state: ReaderState
+  var lastUsed: Date
 }
 
 @MainActor
@@ -89,13 +84,6 @@ public final class ReaderStateStore {
       states = Dictionary(uniqueKeysWithValues: retained)
     }
 
-    let data = try JSONEncoder().encode(states)
-    defaults.set(data, forKey: key)
-  }
-
-  public func removeState(for identity: DocumentIdentity) throws {
-    var states = try load()
-    states.removeValue(forKey: identity.rawValue)
     let data = try JSONEncoder().encode(states)
     defaults.set(data, forKey: key)
   }

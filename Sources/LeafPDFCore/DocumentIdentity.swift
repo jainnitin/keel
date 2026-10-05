@@ -25,10 +25,6 @@ public struct DocumentIdentity: RawRepresentable, Codable, Hashable, Sendable {
     let digest = SHA256.hash(data: Data(components.joined(separator: "\u{1F}").utf8))
     rawValue = digest.map { String(format: "%02x", $0) }.joined()
   }
-
-  public var shortValue: String {
-    String(rawValue.prefix(12))
-  }
 }
 
 public struct DocumentIdentityMetadata: Equatable, Sendable {

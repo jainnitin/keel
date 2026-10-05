@@ -2,7 +2,6 @@ import AppKit
 import LeafPDFCore
 import PDFKit
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct ReaderRootView: View {
   @ObservedObject var model: ReaderViewModel
@@ -50,11 +49,7 @@ struct ReaderRootView: View {
       )
     }
     .dropDestination(for: URL.self) { urls, _ in
-      let pdfs = urls.filter { url in
-        (try? url.resourceValues(forKeys: [.contentTypeKey]).contentType)?.conforms(to: .pdf)
-          ?? false
-      }
-      pdfs.forEach(model.openDroppedPDF)
+      DocumentOpener.openDroppedPDFs(urls)
     }
   }
 
@@ -89,9 +84,6 @@ struct ReaderRootView: View {
       placement: .toolbar,
       prompt: "Search PDF"
     )
-    .onSubmit(of: .search) {
-      model.updateSearchQuery()
-    }
     .onChange(of: model.searchQuery) {
       model.updateSearchQuery()
     }

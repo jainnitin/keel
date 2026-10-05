@@ -219,13 +219,7 @@ private struct SearchResultsSidebar: View {
 
   var body: some View {
     Group {
-      if model.searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-        ContentUnavailableView(
-          "Search This PDF",
-          systemImage: "text.magnifyingglass",
-          description: Text("Use the search field in the toolbar.")
-        )
-      } else if searchService.results.isEmpty, searchService.isSearching {
+      if searchService.results.isEmpty, searchService.isSearching {
         ProgressView("Searching…")
           .frame(maxWidth: .infinity, maxHeight: .infinity)
       } else if searchService.results.isEmpty {

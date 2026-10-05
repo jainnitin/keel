@@ -1,13 +1,12 @@
 import AppKit
 import SwiftUI
-import UniformTypeIdentifiers
 
 private struct WindowNotification: @unchecked Sendable {
   let value: Notification
 }
 
 @MainActor
-final class WelcomeWindowController: NSWindowController, NSWindowDelegate {
+final class WelcomeWindowController: NSWindowController {
   static let shared = WelcomeWindowController()
 
   private let hostingController = NSHostingController(rootView: WelcomeView(recentURLs: []))
@@ -34,7 +33,6 @@ final class WelcomeWindowController: NSWindowController, NSWindowDelegate {
     window.contentViewController = hostingController
     window.setContentSize(NSSize(width: 680, height: 420))
     super.init(window: window)
-    window.delegate = self
 
     documentWindowObserver = NotificationCenter.default.addObserver(
       forName: NSWindow.didBecomeMainNotification,
@@ -70,18 +68,6 @@ final class WelcomeWindowController: NSWindowController, NSWindowDelegate {
   }
 }
 
-enum DocumentOpener {
-  @MainActor
-  static func open(_ url: URL) {
-    NSDocumentController.shared.openDocument(withContentsOf: url, display: true) {
-      _, _, error in
-      if let error {
-        NSApplication.shared.presentError(error)
-      }
-    }
-  }
-}
-
 private struct WelcomeView: View {
   let recentURLs: [URL]
 
@@ -98,12 +84,7 @@ private struct WelcomeView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .ignoresSafeArea()
     .dropDestination(for: URL.self) { urls, _ in
-      let pdfs = urls.filter { url in
-        (try? url.resourceValues(forKeys: [.contentTypeKey]).contentType)?.conforms(to: .pdf)
-          ?? false
-      }
-      pdfs.forEach(DocumentOpener.open)
-      return !pdfs.isEmpty
+      DocumentOpener.openDroppedPDFs(urls)
     } isTargeted: {
       isDropTargeted = $0
     }

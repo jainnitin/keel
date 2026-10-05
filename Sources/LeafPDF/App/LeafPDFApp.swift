@@ -30,14 +30,7 @@ private struct DocumentCommands: Commands {
         } else {
           ForEach(recentURLs, id: \.self) { url in
             Button(url.lastPathComponent) {
-              NSDocumentController.shared.openDocument(
-                withContentsOf: url,
-                display: true
-              ) { _, _, error in
-                if let error {
-                  NSApplication.shared.presentError(error)
-                }
-              }
+              DocumentOpener.open(url)
             }
           }
           Divider()

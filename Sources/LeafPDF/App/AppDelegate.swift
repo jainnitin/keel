@@ -32,42 +32,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
     true
   }
-
-  func application(_ application: NSApplication, openFiles filenames: [String]) {
-    let urls = filenames.map(URL.init(fileURLWithPath:))
-    guard !urls.isEmpty else {
-      application.reply(toOpenOrPrint: .failure)
-      return
-    }
-    open(urls, at: 0, application: application, firstError: nil)
-  }
-
-  private func open(
-    _ urls: [URL],
-    at index: Int,
-    application: NSApplication,
-    firstError: Error?
-  ) {
-    guard index < urls.count else {
-      application.reply(toOpenOrPrint: firstError == nil ? .success : .failure)
-      if let firstError {
-        application.presentError(firstError)
-      }
-      return
-    }
-
-    NSDocumentController.shared.openDocument(
-      withContentsOf: urls[index],
-      display: true
-    ) { [weak self] _, _, error in
-      Task { @MainActor [weak self] in
-        self?.open(
-          urls,
-          at: index + 1,
-          application: application,
-          firstError: firstError ?? error
-        )
-      }
-    }
-  }
 }
+

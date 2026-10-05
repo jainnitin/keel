@@ -56,13 +56,9 @@ final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
     selections[result.id]
   }
 
-  func cancel() {
+  func tearDown() {
     document?.cancelFindString()
     isSearching = false
-  }
-
-  func tearDown() {
-    cancel()
     if document?.delegate === self {
       document?.delegate = nil
     }
@@ -98,7 +94,7 @@ final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
     guard
       let document,
       let page = selection.pages.first,
-      let pageIndex = Optional(document.index(for: page)),
+      case let pageIndex = document.index(for: page),
       pageIndex != NSNotFound,
       selection.string?.compare(
         query,

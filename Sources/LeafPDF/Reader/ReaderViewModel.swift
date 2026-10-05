@@ -55,7 +55,7 @@ final class ReaderViewModel: ObservableObject {
   private(set) var outline: [PDFOutlineNode] = []
   /// The non-search section to return to when the search query is cleared.
   private var browsingSection: ReaderSidebarSection = .thumbnails
-  private let passwordCoordinator: PasswordCoordinator
+  private let passwordStore: any PasswordStore
   private let stateStore: ReaderStateStore
   private var accessTask: Task<Void, Never>?
   private var unlockTask: Task<Void, Never>?
@@ -75,11 +75,11 @@ final class ReaderViewModel: ObservableObject {
     self.document = document
     self.identity = identity
     self.sourceURL = sourceURL
-    self.passwordCoordinator = PasswordCoordinator(store: passwordStore)
+    self.passwordStore = passwordStore
     self.stateStore = stateStore
     searchService = PDFSearchService(document: document)
     thumbnailService = ThumbnailService(url: sourceURL)
-    viewer.onStateChange = { [weak self] _, _ in
+    viewer.onStateChange = { [weak self] in
       self?.scheduleStateSave()
     }
   }
@@ -147,7 +147,7 @@ final class ReaderViewModel: ObservableObject {
 
       if remember {
         do {
-          try await passwordCoordinator.remember(password, for: identity)
+          try await passwordStore.setPassword(password, for: identity)
           guard !Task.isCancelled, !isTornDown else {
             return
           }
@@ -169,7 +169,7 @@ final class ReaderViewModel: ObservableObject {
         return
       }
       do {
-        try await passwordCoordinator.forget(identity)
+        try await passwordStore.removePassword(for: identity)
         guard !Task.isCancelled, !isTornDown else {
           return
         }
@@ -179,19 +179,6 @@ final class ReaderViewModel: ObservableObject {
           return
         }
         present(error, title: "Saved Password Could Not Be Removed")
-      }
-    }
-  }
-
-  func openDroppedPDF(_ url: URL) {
-    NSDocumentController.shared.openDocument(
-      withContentsOf: url,
-      display: true
-    ) { [weak self] _, _, error in
-      if let error {
-        Task { @MainActor [weak self] in
-          self?.present(error, title: "PDF Could Not Be Opened")
-        }
       }
     }
   }
@@ -232,7 +219,7 @@ final class ReaderViewModel: ObservableObject {
     }
 
     do {
-      if let storedPassword = try await passwordCoordinator.storedPassword(for: identity) {
+      if let storedPassword = try await passwordStore.password(for: identity) {
         guard !Task.isCancelled, !isTornDown else {
           return
         }
@@ -246,7 +233,7 @@ final class ReaderViewModel: ObservableObject {
           return
         }
 
-        try await passwordCoordinator.forget(identity)
+        try await passwordStore.removePassword(for: identity)
         hasSavedPassword = false
       }
       guard !Task.isCancelled, !isTornDown else {
@@ -326,11 +313,13 @@ final class ReaderViewModel: ObservableObject {
     )
     do {
       try stateStore.save(state, for: identity)
-    } catch  where !didPresentStatePersistenceError {
+    } catch {
+      // Report once per document; repeating on every page turn would be noise.
+      guard !didPresentStatePersistenceError else {
+        return
+      }
       didPresentStatePersistenceError = true
       present(error, title: "Reading Position Could Not Be Saved")
-    } catch {
-      return
     }
   }
 

@@ -7,7 +7,7 @@ final class PDFViewController: NSObject, ObservableObject {
   @Published private(set) var currentPageIndex = 0
   @Published private(set) var scaleFactor = 1.0
 
-  var onStateChange: ((Int, Double) -> Void)?
+  var onStateChange: (() -> Void)?
 
   private weak var pdfView: PDFView?
   private weak var document: PDFDocument?
@@ -184,6 +184,6 @@ final class PDFViewController: NSObject, ObservableObject {
       }
     }
     scaleFactor = pdfView.scaleFactor
-    onStateChange?(currentPageIndex, scaleFactor)
+    onStateChange?()
   }
 }

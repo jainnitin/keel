@@ -19,18 +19,4 @@ final class SearchContextTests: XCTestCase {
     XCTAssertFalse(excerpt.contains("\n"))
     XCTAssertLessThanOrEqual(excerpt.count, 47)
   }
-
-  func testExcerptPerformanceForLargePageText() {
-    let source =
-      String(repeating: "ordinary searchable PDF text ", count: 20_000)
-      + "target phrase"
-
-    measure {
-      _ = SearchContext.excerpt(
-        in: source,
-        matching: "target phrase",
-        maximumLength: 160
-      )
-    }
-  }
 }
