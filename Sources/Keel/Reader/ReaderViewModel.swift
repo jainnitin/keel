@@ -306,6 +306,7 @@ final class ReaderViewModel: ObservableObject {
     }
     let state = ReaderState(
       pageIndex: viewer.currentPageIndex,
+      autoScales: viewer.autoScales,
       scaleFactor: viewer.scaleFactor,
       layout: layout,
       sidebarSection: browsingSection,

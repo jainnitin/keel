@@ -6,6 +6,7 @@ import PDFKit
 final class PDFViewController: NSObject, ObservableObject {
   @Published private(set) var currentPageIndex = 0
   @Published private(set) var scaleFactor = 1.0
+  @Published private(set) var autoScales = true
 
   var onStateChange: (() -> Void)?
 
@@ -68,9 +69,13 @@ final class PDFViewController: NSObject, ObservableObject {
     if let page = document.page(at: state.pageIndex) {
       pdfView.go(to: page)
     }
-    pdfView.autoScales = false
-    pdfView.scaleFactor = min(
-      max(state.scaleFactor, pdfView.minScaleFactor), pdfView.maxScaleFactor)
+    if state.autoScales {
+      pdfView.autoScales = true
+    } else {
+      pdfView.autoScales = false
+      pdfView.scaleFactor = min(
+        max(state.scaleFactor, pdfView.minScaleFactor), pdfView.maxScaleFactor)
+    }
     updatePublishedState()
   }
 
@@ -125,12 +130,20 @@ final class PDFViewController: NSObject, ObservableObject {
     pdfView.zoomOut(nil)
   }
 
+  /// Fits the page to the window and keeps fitting as the window resizes.
+  func zoomToFit() {
+    pdfView?.autoScales = true
+    updatePublishedState()
+  }
+
   func actualSize() {
     guard let pdfView else {
       return
     }
     pdfView.autoScales = false
     pdfView.scaleFactor = 1
+    // No scale notification arrives when the scale was already 1, but auto-fit still changed.
+    updatePublishedState()
   }
 
   func fitToWidth() {
@@ -150,6 +163,7 @@ final class PDFViewController: NSObject, ObservableObject {
       max(availableWidth / pageBounds.width, pdfView.minScaleFactor),
       pdfView.maxScaleFactor
     )
+    updatePublishedState()
   }
 
   private func installObservers(for view: PDFView) {
@@ -184,6 +198,7 @@ final class PDFViewController: NSObject, ObservableObject {
       }
     }
     scaleFactor = pdfView.scaleFactor
+    autoScales = pdfView.autoScales
     onStateChange?()
   }
 }

@@ -13,6 +13,18 @@ final class ReaderStateTests: XCTestCase {
     XCTAssertEqual(state.scaleFactor, 16)
   }
 
+  func testStateWithoutAutoScalesDecodesAsAutoScaling() throws {
+    let json = """
+      {"pageIndex": 3, "scaleFactor": 2, "layout": "continuous",
+       "sidebarSection": "outline", "sidebarVisible": false}
+      """
+    let state = try JSONDecoder().decode(ReaderState.self, from: Data(json.utf8))
+
+    XCTAssertEqual(state.pageIndex, 3)
+    XCTAssertTrue(state.autoScales)
+    XCTAssertEqual(state.sidebarSection, .outline)
+  }
+
   func testStateStoreEvictsLeastRecentlyUsedDocument() throws {
     let suiteName = "ReaderStateTests.\(UUID().uuidString)"
     let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))

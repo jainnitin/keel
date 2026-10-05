@@ -13,6 +13,8 @@ public enum ReaderSidebarSection: String, Codable, CaseIterable, Sendable {
 
 public struct ReaderState: Codable, Equatable, Sendable {
   public var pageIndex: Int
+  /// When true the view keeps fitting the page to the window and `scaleFactor` is ignored.
+  public var autoScales: Bool
   public var scaleFactor: Double
   public var layout: ReaderLayout
   public var sidebarSection: ReaderSidebarSection
@@ -20,16 +22,29 @@ public struct ReaderState: Codable, Equatable, Sendable {
 
   public init(
     pageIndex: Int = 0,
+    autoScales: Bool = true,
     scaleFactor: Double = 1,
     layout: ReaderLayout = .continuous,
     sidebarSection: ReaderSidebarSection = .thumbnails,
     sidebarVisible: Bool = true
   ) {
     self.pageIndex = pageIndex
+    self.autoScales = autoScales
     self.scaleFactor = scaleFactor
     self.layout = layout
     self.sidebarSection = sidebarSection
     self.sidebarVisible = sidebarVisible
+  }
+
+  public init(from decoder: Decoder) throws {
+    // Decode keys added after the first release leniently so saved positions survive upgrades.
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    pageIndex = try container.decode(Int.self, forKey: .pageIndex)
+    autoScales = try container.decodeIfPresent(Bool.self, forKey: .autoScales) ?? true
+    scaleFactor = try container.decode(Double.self, forKey: .scaleFactor)
+    layout = try container.decode(ReaderLayout.self, forKey: .layout)
+    sidebarSection = try container.decode(ReaderSidebarSection.self, forKey: .sidebarSection)
+    sidebarVisible = try container.decode(Bool.self, forKey: .sidebarVisible)
   }
 
   public func normalized(pageCount: Int) -> ReaderState {
