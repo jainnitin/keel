@@ -9,6 +9,10 @@ struct PDFSearchResult: Identifiable, Equatable {
   let excerpt: String
 }
 
+private struct PDFSearchMatch: @unchecked Sendable {
+  let selection: PDFSelection
+}
+
 @MainActor
 final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
   @Published private(set) var results: [PDFSearchResult] = []
@@ -68,13 +72,13 @@ final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
   }
 
   nonisolated func documentDidBeginDocumentFind(_ notification: Notification) {
-    Task { @MainActor [weak self] in
+    MainActor.assumeIsolated { [weak self] in
       self?.isSearching = true
     }
   }
 
   nonisolated func documentDidEndDocumentFind(_ notification: Notification) {
-    Task { @MainActor [weak self] in
+    MainActor.assumeIsolated { [weak self] in
       self?.isSearching = false
     }
   }
@@ -84,8 +88,9 @@ final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
     else {
       return
     }
-    Task { @MainActor [weak self] in
-      self?.append(selection)
+    let match = PDFSearchMatch(selection: selection)
+    Task { @MainActor [weak self, match] in
+      self?.append(match.selection)
     }
   }
 

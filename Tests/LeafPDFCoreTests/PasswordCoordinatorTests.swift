@@ -8,14 +8,14 @@ final class PasswordCoordinatorTests: XCTestCase {
     let coordinator = PasswordCoordinator(store: store)
     let identity = DocumentIdentity(rawValue: "document")
 
-    XCTAssertNil(try await coordinator.storedPassword(for: identity))
+    let initialPassword = try await coordinator.storedPassword(for: identity)
+    XCTAssertNil(initialPassword)
     try await coordinator.remember("correct horse battery staple", for: identity)
-    XCTAssertEqual(
-      try await coordinator.storedPassword(for: identity),
-      "correct horse battery staple"
-    )
+    let storedPassword = try await coordinator.storedPassword(for: identity)
+    XCTAssertEqual(storedPassword, "correct horse battery staple")
     try await coordinator.forget(identity)
-    XCTAssertNil(try await coordinator.storedPassword(for: identity))
+    let removedPassword = try await coordinator.storedPassword(for: identity)
+    XCTAssertNil(removedPassword)
   }
 
   func testStoreErrorsArePropagated() async {
