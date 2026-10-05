@@ -51,3 +51,5 @@ Notes for anyone (human or agent) changing this codebase. Keep this file short a
 - Several agents may push to `main`. Run `git pull --rebase` before starting, and rebase before pushing.
 - Do work on a branch and open a PR. Run the Xcode build and tests before pushing.
 - CI runs build + tests on pushes and PRs to main; keep it green.
+- Releases: push a tag like `v1.2.0`. `.github/workflows/release.yml` builds, signs with Developer ID,
+  notarizes, and publishes `Keel.dmg`; the tag sets the version. Signing secrets live in the repo settings.
