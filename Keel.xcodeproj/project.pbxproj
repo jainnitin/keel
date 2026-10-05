@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		098756A3D096811DCBD1C79A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A48E288D6FB35CACE23650 /* AppKit.framework */; };
+		0A0A0A0A0A0A0A0A0A0A0A01 /* libKeelCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AD8711B2630DEEFB9768DB /* libKeelCore.a */; };
+		0A0A0A0A0A0A0A0A0A0A0A02 /* libKeelCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AD8711B2630DEEFB9768DB /* libKeelCore.a */; };
+		261AEAD3FB222472FADC07BA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E8D20FF729E08EDAF46171B /* Security.framework */; };
+		56CF434B1D95E0B25C9740D2 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B0CC5B3BEF9F8665A6EF26 /* PDFKit.framework */; };
+		5E261CE9026968E513CF2A39 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835E660AA81DF29F4A960AD0 /* XCTest.framework */; };
+		E7595612814B7B118ADF58FA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 784BB4ADE1DEDCC947231495 /* Quartz.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		453670F5CCE6441667FE9822 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2874FAF5761FD51997292E41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4BDF6DE679E3368E0CD8B448;
+			remoteInfo = KeelCore;
+		};
+		50D434C45267D68FDF0CA29F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2874FAF5761FD51997292E41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4BDF6DE679E3368E0CD8B448;
+			remoteInfo = KeelCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		37DE9610844BE1FCC6E1A78F /* Keel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50A48E288D6FB35CACE23650 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = "<group>"; };
+		53AD8711B2630DEEFB9768DB /* libKeelCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKeelCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E8D20FF729E08EDAF46171B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = "<group>"; };
+		6D50611806549FF3B87ABF94 /* Keel.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = Keel.entitlements; sourceTree = "<group>"; };
+		6FDAF1DA7B5202DFA5D522A2 /* generate_app_icon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = generate_app_icon.swift; sourceTree = "<group>"; };
+		74C7D543EADC9730E0F5EDD2 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		784BB4ADE1DEDCC947231495 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = "<group>"; };
+		835E660AA81DF29F4A960AD0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = "<group>"; };
+		934F0D76B475FA618FF9AE69 /* Package.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		97B0CC5B3BEF9F8665A6EF26 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = "<group>"; };
+		9F02BF96C7E423F779AD656D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		A4D0E4073DEF22EFC1EDFB73 /* .gitignore */ = {isa = PBXFileReference; includeInIndex = 1; path = .gitignore; sourceTree = "<group>"; };
+		D8ACF75AFD07F31A006FC0FD /* KeelCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeelCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5A1F00000000000000000001 /* Sources/Keel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources/Keel;
+			sourceTree = "<group>";
+		};
+		5A1F00000000000000000002 /* Sources/KeelCore */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources/KeelCore;
+			sourceTree = "<group>";
+		};
+		5A1F00000000000000000003 /* Tests/KeelCoreTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tests/KeelCoreTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		10187E12B03E6C969F846232 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A0A0A0A0A0A0A0A0A0A0A02 /* libKeelCore.a in Frameworks */,
+				5E261CE9026968E513CF2A39 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		39453C660E998D8D805D66BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A0A0A0A0A0A0A0A0A0A0A01 /* libKeelCore.a in Frameworks */,
+				098756A3D096811DCBD1C79A /* AppKit.framework in Frameworks */,
+				56CF434B1D95E0B25C9740D2 /* PDFKit.framework in Frameworks */,
+				261AEAD3FB222472FADC07BA /* Security.framework in Frameworks */,
+				E7595612814B7B118ADF58FA /* Quartz.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C417FB8C195ECB25F4F3D11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		25E043772A5A3FED438DE94B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				74C7D543EADC9730E0F5EDD2 /* Info.plist */,
+				6D50611806549FF3B87ABF94 /* Keel.entitlements */,
+			);
+			name = "Supporting Files";
+			path = Keel;
+			sourceTree = "<group>";
+		};
+		3390C6EE4A964A0B4102BE95 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53AD8711B2630DEEFB9768DB /* libKeelCore.a */,
+				37DE9610844BE1FCC6E1A78F /* Keel.app */,
+				D8ACF75AFD07F31A006FC0FD /* KeelCoreTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		51C8E3D73B068E58E9DC2C3A /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				6FDAF1DA7B5202DFA5D522A2 /* generate_app_icon.swift */,
+			);
+			name = Tools;
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		5997CCC07624E6EAF0FD3557 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50A48E288D6FB35CACE23650 /* AppKit.framework */,
+				97B0CC5B3BEF9F8665A6EF26 /* PDFKit.framework */,
+				5E8D20FF729E08EDAF46171B /* Security.framework */,
+				784BB4ADE1DEDCC947231495 /* Quartz.framework */,
+				835E660AA81DF29F4A960AD0 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E807623BA9DEE168C515BF3F = {
+			isa = PBXGroup;
+			children = (
+				3390C6EE4A964A0B4102BE95 /* Products */,
+				5997CCC07624E6EAF0FD3557 /* Frameworks */,
+				5A1F00000000000000000002 /* Sources/KeelCore */,
+				5A1F00000000000000000001 /* Sources/Keel */,
+				5A1F00000000000000000003 /* Tests/KeelCoreTests */,
+				25E043772A5A3FED438DE94B /* Supporting Files */,
+				934F0D76B475FA618FF9AE69 /* Package.swift */,
+				A4D0E4073DEF22EFC1EDFB73 /* .gitignore */,
+				9F02BF96C7E423F779AD656D /* README.md */,
+				51C8E3D73B068E58E9DC2C3A /* Tools */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		33265D89F68A25C2F8626555 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4BDF6DE679E3368E0CD8B448 /* KeelCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2400283B1C6E584F0BCEC43 /* Build configuration list for PBXNativeTarget "KeelCore" */;
+			buildPhases = (
+				33265D89F68A25C2F8626555 /* Headers */,
+				F6E0821511BD09F7E23616CD /* Sources */,
+				6C417FB8C195ECB25F4F3D11 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5A1F00000000000000000002 /* Sources/KeelCore */,
+			);
+			name = KeelCore;
+			productName = KeelCore;
+			productReference = 53AD8711B2630DEEFB9768DB /* libKeelCore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		582A978BA4A0B4B2E50F0E98 /* KeelCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 39B01FE1C78A7ACE01781C26 /* Build configuration list for PBXNativeTarget "KeelCoreTests" */;
+			buildPhases = (
+				A2B2F363B54CB18423EEBE50 /* Sources */,
+				10187E12B03E6C969F846232 /* Frameworks */,
+				6368A44087966BAE201B2E67 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6DDBD3C0951BC9D266EADE9F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5A1F00000000000000000003 /* Tests/KeelCoreTests */,
+			);
+			name = KeelCoreTests;
+			productName = KeelCoreTests;
+			productReference = D8ACF75AFD07F31A006FC0FD /* KeelCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		741D5A58FEB37EDA1750D5A5 /* Keel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E73108D2EEF5715A71F54CE /* Build configuration list for PBXNativeTarget "Keel" */;
+			buildPhases = (
+				AE8728C5A836D67A02186448 /* Sources */,
+				39453C660E998D8D805D66BD /* Frameworks */,
+				64CA4BE680520F2ABCB8780C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A8F5C7331250214BD0AD0BC6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5A1F00000000000000000001 /* Sources/Keel */,
+			);
+			name = Keel;
+			productName = Keel;
+			productReference = 37DE9610844BE1FCC6E1A78F /* Keel.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2874FAF5761FD51997292E41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+			};
+			buildConfigurationList = B4B51F49BEF15CB70CBFA7EE /* Build configuration list for PBXProject "Keel" */;
+			compatibilityVersion = "Xcode 16.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E807623BA9DEE168C515BF3F;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 100;
+			productRefGroup = 3390C6EE4A964A0B4102BE95 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4BDF6DE679E3368E0CD8B448 /* KeelCore */,
+				741D5A58FEB37EDA1750D5A5 /* Keel */,
+				582A978BA4A0B4B2E50F0E98 /* KeelCoreTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6368A44087966BAE201B2E67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64CA4BE680520F2ABCB8780C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A2B2F363B54CB18423EEBE50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8728C5A836D67A02186448 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6E0821511BD09F7E23616CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6DDBD3C0951BC9D266EADE9F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KeelCore;
+			target = 4BDF6DE679E3368E0CD8B448 /* KeelCore */;
+			targetProxy = 50D434C45267D68FDF0CA29F /* PBXContainerItemProxy */;
+		};
+		A8F5C7331250214BD0AD0BC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KeelCore;
+			target = 4BDF6DE679E3368E0CD8B448 /* KeelCore */;
+			targetProxy = 453670F5CCE6441667FE9822 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		002FB1129933C8D1C2A56440 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		4E459D77D15222EA61B946E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				BUNDLE_LOADER = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jainnitin.KeelCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "";
+			};
+			name = Debug;
+		};
+		5021FEC7E6DA38965C2359DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Keel/Keel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Keel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jainnitin.Keel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		A210C6635A50D6DA3EB0D4C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				BUNDLE_LOADER = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jainnitin.KeelCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "";
+			};
+			name = Release;
+		};
+		A806290CA2788316F69BCAA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				DEFINES_MODULE = YES;
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jainnitin.KeelCore;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		B04A2D89AE118D1E68341F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Keel/Keel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Keel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jainnitin.Keel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		B14A3A53BFE7017F212471AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		E2CBC1238731EF04358304BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				DEFINES_MODULE = YES;
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jainnitin.KeelCore;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		39B01FE1C78A7ACE01781C26 /* Build configuration list for PBXNativeTarget "KeelCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A210C6635A50D6DA3EB0D4C8 /* Release */,
+				4E459D77D15222EA61B946E5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6E73108D2EEF5715A71F54CE /* Build configuration list for PBXNativeTarget "Keel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5021FEC7E6DA38965C2359DC /* Release */,
+				B04A2D89AE118D1E68341F4D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B4B51F49BEF15CB70CBFA7EE /* Build configuration list for PBXProject "Keel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				002FB1129933C8D1C2A56440 /* Debug */,
+				B14A3A53BFE7017F212471AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2400283B1C6E584F0BCEC43 /* Build configuration list for PBXNativeTarget "KeelCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A806290CA2788316F69BCAA4 /* Release */,
+				E2CBC1238731EF04358304BB /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2874FAF5761FD51997292E41 /* Project object */;
+}

@@ -6,19 +6,19 @@ Notes for anyone (human or agent) changing this codebase. Keep this file short a
 
 - The app builds only with full Xcode. If `xcode-select -p` shows Command Line Tools, prefix commands
   with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
-- Build and test: `xcodebuild -project LeafPDF.xcodeproj -scheme LeafPDF -destination 'platform=macOS,arch=arm64' test`
-- `Package.swift` builds only `LeafPDFCore`. A passing `swift build` says nothing about the app.
-- The Xcode project uses folder-synchronized groups: new files under `Sources/LeafPDF`,
-  `Sources/LeafPDFCore`, or `Tests/LeafPDFCoreTests` are picked up automatically. Don't add
+- Build and test: `xcodebuild -project Keel.xcodeproj -scheme Keel -destination 'platform=macOS,arch=arm64' test`
+- `Package.swift` builds only `KeelCore`. A passing `swift build` says nothing about the app.
+- The Xcode project uses folder-synchronized groups: new files under `Sources/Keel`,
+  `Sources/KeelCore`, or `Tests/KeelCoreTests` are picked up automatically. Don't add
   per-file entries to `project.pbxproj`.
 - Manual testing: launch with `--args -ApplePersistenceIgnoreState YES` to skip window restoration
   (otherwise previously open PDFs reopen and the welcome window stays hidden). When relaunching,
   wait for the old process to exit first; `open` sent to a terminating instance does nothing.
-- Tests cover `LeafPDFCore` only. UI changes need a manual check in the running app.
+- Tests cover `KeelCore` only. UI changes need a manual check in the running app.
 
 ## Architecture
 
-- `LeafPDFDocument` (NSDocument) owns the `PDFDocument` and builds one window per document, hosting
+- `KeelDocument` (NSDocument) owns the `PDFDocument` and builds one window per document, hosting
   `ReaderRootView`. `NSDocumentController` handles opening from Finder, the Open panel, and Recents.
 - `ReaderViewModel` is the per-window state: access/unlock flow, sidebar and search state, and
   debounced persistence of `ReaderState`. Call `tearDown()` when the document closes.
@@ -28,7 +28,7 @@ Notes for anyone (human or agent) changing this codebase. Keep this file short a
 - `WelcomeWindowController` is shown at launch and on Dock reopen when no document window is visible;
   it closes itself when a document window becomes main.
 - `DocumentOpener` is the single place for opening URLs and filtering dropped files to PDFs.
-- Put logic that doesn't need AppKit/PDFKit in `LeafPDFCore` so it can be unit tested.
+- Put logic that doesn't need AppKit/PDFKit in `KeelCore` so it can be unit tested.
 
 ## Conventions
 
