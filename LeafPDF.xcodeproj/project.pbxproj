@@ -7,36 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		012A41DC4886041D8DC829B5 /* ReaderStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696F41522E5C27268AB2A3A /* ReaderStateTests.swift */; };
 		098756A3D096811DCBD1C79A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A48E288D6FB35CACE23650 /* AppKit.framework */; };
 		0A0A0A0A0A0A0A0A0A0A0A01 /* libLeafPDFCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AD8711B2630DEEFB9768DB /* libLeafPDFCore.a */; };
 		0A0A0A0A0A0A0A0A0A0A0A02 /* libLeafPDFCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AD8711B2630DEEFB9768DB /* libLeafPDFCore.a */; };
 		261AEAD3FB222472FADC07BA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E8D20FF729E08EDAF46171B /* Security.framework */; };
-		27291B9CFF24290510250D37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32DE928346FF9E8CD619CCC /* AppDelegate.swift */; };
-		08FD6B7279743B621879084F /* WelcomeWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEB2ED2899299DC3D64D31E /* WelcomeWindow.swift */; };
-		31996B7A37743D775735D738 /* DocumentIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B476F292828789C01EDACCB /* DocumentIdentityTests.swift */; };
-		35D0553377C8B8F239C7927C /* PDFOutlineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FB049B1512AEFECB80279F /* PDFOutlineModel.swift */; };
-		39B1168BA83DCC620311D7BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4754451E1898222D956F414 /* Assets.xcassets */; };
-		3F0D7EA3997A55A66FAA677C /* ReaderSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572FDBF33591ADA627D426B0 /* ReaderSidebar.swift */; };
-		434B5A0542E3A60EC2B4879D /* LeafPDFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465526FADCC9C68B5350BE16 /* LeafPDFDocument.swift */; };
-		5572AD4A4A2C69AD7019AF63 /* ReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080E0BF0F91EA4029024ABD /* ReaderViewModel.swift */; };
 		56CF434B1D95E0B25C9740D2 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B0CC5B3BEF9F8665A6EF26 /* PDFKit.framework */; };
-		5D87B05BEC8C571164D20523 /* PasswordPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43471E291FA9C6A691ED94 /* PasswordPromptView.swift */; };
 		5E261CE9026968E513CF2A39 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835E660AA81DF29F4A960AD0 /* XCTest.framework */; };
-		71DFCFA85A5ACDC601686D62 /* ReaderRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8316F6AD9D0AA47480CB50 /* ReaderRootView.swift */; };
-		78DFDB23E797AFF4D785C451 /* PDFViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A058F6BFAF337E84BCBB8B4B /* PDFViewRepresentable.swift */; };
-		86B31BCB4D9A7FA24514F389 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827CDEC405D395558AE6123A /* PDFViewController.swift */; };
-		87BDCDD2ECC1ADB5E99CC112 /* KeychainPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C545500813A3157FD72EA /* KeychainPasswordStore.swift */; };
-		951E4AFC7983EBFB6E8F4356 /* SearchContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F05477DF14BE587B25D34D /* SearchContext.swift */; };
-		97195F8029E9EABFDC75DB5A /* PDFSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCF4099951E57F465DA940 /* PDFSearchService.swift */; };
-		9B2FD877871F82731B9A30D3 /* PasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32C78CB701375E817E9AC27 /* PasswordStore.swift */; };
-		AC825D7664023AED04F2058B /* LeafPDFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D231DC8A1BAAB8BE3F821CEF /* LeafPDFApp.swift */; };
-		C4F30AC03E486B3B901A8C0C /* ReaderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14441B4151B7FC70C9E4510 /* ReaderState.swift */; };
-		C9125953270BC992E13DFC40 /* ThumbnailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B98D07D9306980FA79F14C /* ThumbnailService.swift */; };
-		E0F17E3705600EB05A84EE7C /* PasswordCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0795255A9CD29DC9FB77FB71 /* PasswordCoordinatorTests.swift */; };
-		E2FE4DE2388905EDC93EBBED /* DocumentIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FC2F586D9C33BC6219A7C4 /* DocumentIdentity.swift */; };
 		E7595612814B7B118ADF58FA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 784BB4ADE1DEDCC947231495 /* Quartz.framework */; };
-		F8202C63631E928AA8AE2612 /* SearchContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F724F164E847946D9E06A9 /* SearchContextTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,44 +34,39 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0795255A9CD29DC9FB77FB71 /* PasswordCoordinatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordCoordinatorTests.swift; sourceTree = "<group>"; };
-		0F43471E291FA9C6A691ED94 /* PasswordPromptView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordPromptView.swift; sourceTree = "<group>"; };
-		18F05477DF14BE587B25D34D /* SearchContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchContext.swift; sourceTree = "<group>"; };
-		24FC2F586D9C33BC6219A7C4 /* DocumentIdentity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DocumentIdentity.swift; sourceTree = "<group>"; };
 		37DE9610844BE1FCC6E1A78F /* LeafPDF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeafPDF.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		465526FADCC9C68B5350BE16 /* LeafPDFDocument.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LeafPDFDocument.swift; sourceTree = "<group>"; };
-		48F724F164E847946D9E06A9 /* SearchContextTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchContextTests.swift; sourceTree = "<group>"; };
-		4B476F292828789C01EDACCB /* DocumentIdentityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DocumentIdentityTests.swift; sourceTree = "<group>"; };
 		50A48E288D6FB35CACE23650 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = "<group>"; };
 		53AD8711B2630DEEFB9768DB /* libLeafPDFCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLeafPDFCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		572FDBF33591ADA627D426B0 /* ReaderSidebar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReaderSidebar.swift; sourceTree = "<group>"; };
 		5E8D20FF729E08EDAF46171B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = "<group>"; };
-		60B98D07D9306980FA79F14C /* ThumbnailService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ThumbnailService.swift; sourceTree = "<group>"; };
-		66FCF4099951E57F465DA940 /* PDFSearchService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PDFSearchService.swift; sourceTree = "<group>"; };
 		6D50611806549FF3B87ABF94 /* LeafPDF.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = LeafPDF.entitlements; sourceTree = "<group>"; };
 		6FDAF1DA7B5202DFA5D522A2 /* generate_app_icon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = generate_app_icon.swift; sourceTree = "<group>"; };
-		7080E0BF0F91EA4029024ABD /* ReaderViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReaderViewModel.swift; sourceTree = "<group>"; };
 		74C7D543EADC9730E0F5EDD2 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7696F41522E5C27268AB2A3A /* ReaderStateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReaderStateTests.swift; sourceTree = "<group>"; };
 		784BB4ADE1DEDCC947231495 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = "<group>"; };
-		827CDEC405D395558AE6123A /* PDFViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		835E660AA81DF29F4A960AD0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = "<group>"; };
 		934F0D76B475FA618FF9AE69 /* Package.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		97B0CC5B3BEF9F8665A6EF26 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = "<group>"; };
 		9F02BF96C7E423F779AD656D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		9F9C545500813A3157FD72EA /* KeychainPasswordStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeychainPasswordStore.swift; sourceTree = "<group>"; };
-		A058F6BFAF337E84BCBB8B4B /* PDFViewRepresentable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PDFViewRepresentable.swift; sourceTree = "<group>"; };
-		A14441B4151B7FC70C9E4510 /* ReaderState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReaderState.swift; sourceTree = "<group>"; };
-		A4754451E1898222D956F414 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		A4D0E4073DEF22EFC1EDFB73 /* .gitignore */ = {isa = PBXFileReference; includeInIndex = 1; path = .gitignore; sourceTree = "<group>"; };
-		D231DC8A1BAAB8BE3F821CEF /* LeafPDFApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LeafPDFApp.swift; sourceTree = "<group>"; };
-		D32C78CB701375E817E9AC27 /* PasswordStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStore.swift; sourceTree = "<group>"; };
 		D8ACF75AFD07F31A006FC0FD /* LeafPDFCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeafPDFCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D8FB049B1512AEFECB80279F /* PDFOutlineModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PDFOutlineModel.swift; sourceTree = "<group>"; };
-		DC8316F6AD9D0AA47480CB50 /* ReaderRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReaderRootView.swift; sourceTree = "<group>"; };
-		F32DE928346FF9E8CD619CCC /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2FEB2ED2899299DC3D64D31E /* WelcomeWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WelcomeWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5A1F00000000000000000001 /* Sources/LeafPDF */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources/LeafPDF;
+			sourceTree = "<group>";
+		};
+		5A1F00000000000000000002 /* Sources/LeafPDFCore */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources/LeafPDFCore;
+			sourceTree = "<group>";
+		};
+		5A1F00000000000000000003 /* Tests/LeafPDFCoreTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tests/LeafPDFCoreTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		10187E12B03E6C969F846232 /* Frameworks */ = {
@@ -128,26 +100,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0B9494FF996D15F0829DA511 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				F32DE928346FF9E8CD619CCC /* AppDelegate.swift */,
-				D231DC8A1BAAB8BE3F821CEF /* LeafPDFApp.swift */,
-				2FEB2ED2899299DC3D64D31E /* WelcomeWindow.swift */,
-			);
-			name = App;
-			path = App;
-			sourceTree = "<group>";
-		};
-		127F4BE088AFAC045E50D252 /* Security */ = {
-			isa = PBXGroup;
-			children = (
-				9F9C545500813A3157FD72EA /* KeychainPasswordStore.swift */,
-			);
-			name = Security;
-			path = Security;
-			sourceTree = "<group>";
-		};
 		25E043772A5A3FED438DE94B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,32 +108,6 @@
 			);
 			name = "Supporting Files";
 			path = LeafPDF;
-			sourceTree = "<group>";
-		};
-		26C71BD2A1CD90E5B9F4C088 /* LeafPDFCore */ = {
-			isa = PBXGroup;
-			children = (
-				24FC2F586D9C33BC6219A7C4 /* DocumentIdentity.swift */,
-				D32C78CB701375E817E9AC27 /* PasswordStore.swift */,
-				A14441B4151B7FC70C9E4510 /* ReaderState.swift */,
-				18F05477DF14BE587B25D34D /* SearchContext.swift */,
-			);
-			name = LeafPDFCore;
-			path = Sources/LeafPDFCore;
-			sourceTree = "<group>";
-		};
-		2CD7B9B38FF6616078E5C4E1 /* Reader */ = {
-			isa = PBXGroup;
-			children = (
-				827CDEC405D395558AE6123A /* PDFViewController.swift */,
-				A058F6BFAF337E84BCBB8B4B /* PDFViewRepresentable.swift */,
-				0F43471E291FA9C6A691ED94 /* PasswordPromptView.swift */,
-				DC8316F6AD9D0AA47480CB50 /* ReaderRootView.swift */,
-				572FDBF33591ADA627D426B0 /* ReaderSidebar.swift */,
-				7080E0BF0F91EA4029024ABD /* ReaderViewModel.swift */,
-			);
-			name = Reader;
-			path = Reader;
 			sourceTree = "<group>";
 		};
 		3390C6EE4A964A0B4102BE95 /* Products */ = {
@@ -215,60 +141,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		72722FE0A56F2F863228A1E7 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				D8FB049B1512AEFECB80279F /* PDFOutlineModel.swift */,
-				66FCF4099951E57F465DA940 /* PDFSearchService.swift */,
-				60B98D07D9306980FA79F14C /* ThumbnailService.swift */,
-			);
-			name = Services;
-			path = Services;
-			sourceTree = "<group>";
-		};
-		8EECF05F472B862D4EBF364D /* LeafPDFCoreTests */ = {
-			isa = PBXGroup;
-			children = (
-				4B476F292828789C01EDACCB /* DocumentIdentityTests.swift */,
-				0795255A9CD29DC9FB77FB71 /* PasswordCoordinatorTests.swift */,
-				7696F41522E5C27268AB2A3A /* ReaderStateTests.swift */,
-				48F724F164E847946D9E06A9 /* SearchContextTests.swift */,
-			);
-			name = LeafPDFCoreTests;
-			path = Tests/LeafPDFCoreTests;
-			sourceTree = "<group>";
-		};
-		9719C97EB7BC1275D00F52F2 /* LeafPDF */ = {
-			isa = PBXGroup;
-			children = (
-				0B9494FF996D15F0829DA511 /* App */,
-				C731672136951D641AD5F832 /* Document */,
-				2CD7B9B38FF6616078E5C4E1 /* Reader */,
-				127F4BE088AFAC045E50D252 /* Security */,
-				72722FE0A56F2F863228A1E7 /* Services */,
-				A4754451E1898222D956F414 /* Assets.xcassets */,
-			);
-			name = LeafPDF;
-			path = Sources/LeafPDF;
-			sourceTree = "<group>";
-		};
-		C731672136951D641AD5F832 /* Document */ = {
-			isa = PBXGroup;
-			children = (
-				465526FADCC9C68B5350BE16 /* LeafPDFDocument.swift */,
-			);
-			name = Document;
-			path = Document;
-			sourceTree = "<group>";
-		};
 		E807623BA9DEE168C515BF3F = {
 			isa = PBXGroup;
 			children = (
 				3390C6EE4A964A0B4102BE95 /* Products */,
 				5997CCC07624E6EAF0FD3557 /* Frameworks */,
-				26C71BD2A1CD90E5B9F4C088 /* LeafPDFCore */,
-				9719C97EB7BC1275D00F52F2 /* LeafPDF */,
-				8EECF05F472B862D4EBF364D /* LeafPDFCoreTests */,
+				5A1F00000000000000000002 /* Sources/LeafPDFCore */,
+				5A1F00000000000000000001 /* Sources/LeafPDF */,
+				5A1F00000000000000000003 /* Tests/LeafPDFCoreTests */,
 				25E043772A5A3FED438DE94B /* Supporting Files */,
 				934F0D76B475FA618FF9AE69 /* Package.swift */,
 				A4D0E4073DEF22EFC1EDFB73 /* .gitignore */,
@@ -302,6 +182,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				5A1F00000000000000000002 /* Sources/LeafPDFCore */,
+			);
 			name = LeafPDFCore;
 			productName = LeafPDFCore;
 			productReference = 53AD8711B2630DEEFB9768DB /* libLeafPDFCore.a */;
@@ -320,6 +203,9 @@
 			dependencies = (
 				6DDBD3C0951BC9D266EADE9F /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				5A1F00000000000000000003 /* Tests/LeafPDFCoreTests */,
+			);
 			name = LeafPDFCoreTests;
 			productName = LeafPDFCoreTests;
 			productReference = D8ACF75AFD07F31A006FC0FD /* LeafPDFCoreTests.xctest */;
@@ -337,6 +223,9 @@
 			);
 			dependencies = (
 				A8F5C7331250214BD0AD0BC6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5A1F00000000000000000001 /* Sources/LeafPDF */,
 			);
 			name = LeafPDF;
 			productName = LeafPDF;
@@ -386,7 +275,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39B1168BA83DCC620311D7BB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,10 +285,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31996B7A37743D775735D738 /* DocumentIdentityTests.swift in Sources */,
-				E0F17E3705600EB05A84EE7C /* PasswordCoordinatorTests.swift in Sources */,
-				012A41DC4886041D8DC829B5 /* ReaderStateTests.swift in Sources */,
-				F8202C63631E928AA8AE2612 /* SearchContextTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,20 +292,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27291B9CFF24290510250D37 /* AppDelegate.swift in Sources */,
-				08FD6B7279743B621879084F /* WelcomeWindow.swift in Sources */,
-				AC825D7664023AED04F2058B /* LeafPDFApp.swift in Sources */,
-				434B5A0542E3A60EC2B4879D /* LeafPDFDocument.swift in Sources */,
-				86B31BCB4D9A7FA24514F389 /* PDFViewController.swift in Sources */,
-				78DFDB23E797AFF4D785C451 /* PDFViewRepresentable.swift in Sources */,
-				5D87B05BEC8C571164D20523 /* PasswordPromptView.swift in Sources */,
-				71DFCFA85A5ACDC601686D62 /* ReaderRootView.swift in Sources */,
-				3F0D7EA3997A55A66FAA677C /* ReaderSidebar.swift in Sources */,
-				5572AD4A4A2C69AD7019AF63 /* ReaderViewModel.swift in Sources */,
-				87BDCDD2ECC1ADB5E99CC112 /* KeychainPasswordStore.swift in Sources */,
-				35D0553377C8B8F239C7927C /* PDFOutlineModel.swift in Sources */,
-				97195F8029E9EABFDC75DB5A /* PDFSearchService.swift in Sources */,
-				C9125953270BC992E13DFC40 /* ThumbnailService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,10 +299,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2FE4DE2388905EDC93EBBED /* DocumentIdentity.swift in Sources */,
-				9B2FD877871F82731B9A30D3 /* PasswordStore.swift in Sources */,
-				C4F30AC03E486B3B901A8C0C /* ReaderState.swift in Sources */,
-				951E4AFC7983EBFB6E8F4356 /* SearchContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

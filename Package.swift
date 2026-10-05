@@ -1,5 +1,7 @@
 // swift-tools-version: 6.1
 
+// Builds and tests only the platform-independent core. The macOS app is built
+// from LeafPDF.xcodeproj, which provides the bundle, Info.plist, and sandbox.
 import PackageDescription
 
 let package = Package(
@@ -8,24 +10,12 @@ let package = Package(
     .macOS("26.0")
   ],
   products: [
-    .library(name: "LeafPDFCore", targets: ["LeafPDFCore"]),
-    .executable(name: "LeafPDF", targets: ["LeafPDF"]),
+    .library(name: "LeafPDFCore", targets: ["LeafPDFCore"])
   ],
   targets: [
     .target(
       name: "LeafPDFCore",
       path: "Sources/LeafPDFCore"
-    ),
-    .executableTarget(
-      name: "LeafPDF",
-      dependencies: ["LeafPDFCore"],
-      path: "Sources/LeafPDF",
-      exclude: ["Resources"],
-      linkerSettings: [
-        .linkedFramework("AppKit"),
-        .linkedFramework("PDFKit"),
-        .linkedFramework("Security"),
-      ]
     ),
     .testTarget(
       name: "LeafPDFCoreTests",
