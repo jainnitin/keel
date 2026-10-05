@@ -73,8 +73,12 @@ final class LeafPDFDocument: NSDocument {
     window.toolbarStyle = .unified
     window.tabbingMode = .disallowed
     window.isRestorable = true
-    window.setFrameAutosaveName("LeafPDF.DocumentWindow")
-    window.center()
+    let frameAutosaveName = "LeafPDF.DocumentWindow"
+    let restoredFrame = window.setFrameUsingName(frameAutosaveName)
+    window.setFrameAutosaveName(frameAutosaveName)
+    if !restoredFrame {
+      window.center()
+    }
 
     let windowController = NSWindowController(window: window)
     addWindowController(windowController)

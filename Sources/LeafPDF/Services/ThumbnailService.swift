@@ -14,17 +14,26 @@ actor ThumbnailService {
     var lastAccess: UInt64
   }
 
-  private let document: CGPDFDocument?
+  private let url: URL
   private let costLimit: Int
   private let countLimit: Int
+  private var document: CGPDFDocument?
   private var entries: [CacheKey: CacheEntry] = [:]
   private var totalCost = 0
   private var accessCounter: UInt64 = 0
 
   init(url: URL, costLimit: Int = 48 * 1_024 * 1_024, countLimit: Int = 96) {
-    document = CGPDFDocument(url as CFURL)
+    self.url = url
     self.costLimit = max(costLimit, 1)
     self.countLimit = max(countLimit, 1)
+  }
+
+  func unlock(withPassword password: String) throws {
+    let document = try loadedDocument()
+    guard !document.isEncrypted || document.isUnlocked || document.unlockWithPassword(password)
+    else {
+      throw ThumbnailError.unlockFailed
+    }
   }
 
   func thumbnail(
@@ -46,10 +55,11 @@ actor ThumbnailService {
       return entry.image
     }
 
-    guard
-      let document,
-      let page = document.page(at: pageIndex + 1)
-    else {
+    let document = try loadedDocument()
+    guard !document.isEncrypted || document.isUnlocked else {
+      throw ThumbnailError.locked
+    }
+    guard let page = document.page(at: pageIndex + 1) else {
       throw ThumbnailError.pageUnavailable(pageIndex + 1)
     }
 
@@ -107,9 +117,24 @@ actor ThumbnailService {
     return image
   }
 
-  func removeAll() {
+  func tearDown() {
     entries.removeAll(keepingCapacity: false)
     totalCost = 0
+    document = nil
+  }
+
+  private func loadedDocument() throws -> CGPDFDocument {
+    if let document {
+      return document
+    }
+    guard let loadedDocument = CGPDFDocument(url as CFURL) else {
+      throw ThumbnailError.documentUnavailable
+    }
+    if loadedDocument.isEncrypted && !loadedDocument.isUnlocked {
+      _ = loadedDocument.unlockWithPassword("")
+    }
+    document = loadedDocument
+    return loadedDocument
   }
 
   private func evictIfNeeded() {
@@ -124,12 +149,21 @@ actor ThumbnailService {
 }
 
 enum ThumbnailError: LocalizedError {
+  case documentUnavailable
+  case locked
+  case unlockFailed
   case pageUnavailable(Int)
   case invalidPageBounds(Int)
   case renderingFailed(Int)
 
   var errorDescription: String? {
     switch self {
+    case .documentUnavailable:
+      "The PDF could not be opened for thumbnail rendering."
+    case .locked:
+      "The PDF must be unlocked before thumbnails can be rendered."
+    case .unlockFailed:
+      "The PDF was opened, but its thumbnails could not be unlocked."
     case .pageUnavailable(let page):
       "Page \(page) is unavailable."
     case .invalidPageBounds(let page):

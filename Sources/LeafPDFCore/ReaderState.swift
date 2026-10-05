@@ -104,6 +104,11 @@ public final class ReaderStateStore {
     guard let data = defaults.data(forKey: key) else {
       return [:]
     }
-    return try JSONDecoder().decode([String: PersistedReaderState].self, from: data)
+    do {
+      return try JSONDecoder().decode([String: PersistedReaderState].self, from: data)
+    } catch {
+      defaults.removeObject(forKey: key)
+      throw error
+    }
   }
 }

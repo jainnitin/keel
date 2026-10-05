@@ -53,6 +53,7 @@ final class ReaderViewModel: ObservableObject {
   private let passwordCoordinator: PasswordCoordinator
   private let stateStore: ReaderStateStore
   private var accessTask: Task<Void, Never>?
+  private var unlockTask: Task<Void, Never>?
   private var passwordTask: Task<Void, Never>?
   private var searchTask: Task<Void, Never>?
   private var stateSaveTask: Task<Void, Never>?
@@ -119,27 +120,33 @@ final class ReaderViewModel: ObservableObject {
     }
 
     isPasswordPromptPresented = false
-    finishUnlock()
-    guard remember else {
-      return
-    }
-
-    passwordTask?.cancel()
-    passwordTask = Task { [weak self] in
+    unlockTask?.cancel()
+    unlockTask = Task { [weak self] in
       guard let self else {
         return
       }
-      do {
-        try await passwordCoordinator.remember(password, for: identity)
-        guard !Task.isCancelled, !isTornDown else {
-          return
+      defer {
+        unlockTask = nil
+      }
+      await prepareThumbnails(password: password)
+      guard !Task.isCancelled, !isTornDown else {
+        return
+      }
+      finishUnlock()
+
+      if remember {
+        do {
+          try await passwordCoordinator.remember(password, for: identity)
+          guard !Task.isCancelled, !isTornDown else {
+            return
+          }
+          hasSavedPassword = true
+        } catch {
+          guard !Task.isCancelled, !isTornDown else {
+            return
+          }
+          present(error, title: "Password Was Not Saved")
         }
-        hasSavedPassword = true
-      } catch {
-        guard !Task.isCancelled, !isTornDown else {
-          return
-        }
-        present(error, title: "Password Was Not Saved")
       }
     }
   }
@@ -193,13 +200,14 @@ final class ReaderViewModel: ObservableObject {
     isTornDown = true
     saveStateNow()
     accessTask?.cancel()
+    unlockTask?.cancel()
     passwordTask?.cancel()
     searchTask?.cancel()
     stateSaveTask?.cancel()
     searchService.tearDown()
     viewer.detach()
     Task { [thumbnailService] in
-      await thumbnailService.removeAll()
+      await thumbnailService.tearDown()
     }
   }
 
@@ -218,6 +226,10 @@ final class ReaderViewModel: ObservableObject {
           return
         }
         if document.unlock(withPassword: storedPassword) {
+          await prepareThumbnails(password: storedPassword)
+          guard !Task.isCancelled, !isTornDown else {
+            return
+          }
           hasSavedPassword = true
           finishUnlock()
           return
@@ -238,6 +250,17 @@ final class ReaderViewModel: ObservableObject {
       accessState = .locked
       present(error, title: "Keychain Error")
       isPasswordPromptPresented = true
+    }
+  }
+
+  private func prepareThumbnails(password: String) async {
+    do {
+      try await thumbnailService.unlock(withPassword: password)
+    } catch {
+      guard !Task.isCancelled, !isTornDown else {
+        return
+      }
+      present(error, title: "Thumbnails Could Not Be Unlocked")
     }
   }
 

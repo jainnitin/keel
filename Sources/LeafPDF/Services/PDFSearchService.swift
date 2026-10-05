@@ -72,13 +72,13 @@ final class PDFSearchService: NSObject, ObservableObject, PDFDocumentDelegate {
   }
 
   nonisolated func documentDidBeginDocumentFind(_ notification: Notification) {
-    MainActor.assumeIsolated { [weak self] in
+    Task { @MainActor [weak self] in
       self?.isSearching = true
     }
   }
 
   nonisolated func documentDidEndDocumentFind(_ notification: Notification) {
-    MainActor.assumeIsolated { [weak self] in
+    Task { @MainActor [weak self] in
       self?.isSearching = false
     }
   }

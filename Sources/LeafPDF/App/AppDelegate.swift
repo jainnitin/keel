@@ -22,6 +22,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     false
   }
 
+  func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+    true
+  }
+
   func application(_ application: NSApplication, openFiles filenames: [String]) {
     let urls = filenames.map(URL.init(fileURLWithPath:))
     guard !urls.isEmpty else {

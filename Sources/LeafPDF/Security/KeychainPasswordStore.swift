@@ -20,6 +20,10 @@ actor KeychainPasswordStore: PasswordStore {
         let data = item as? Data,
         let password = String(data: data, encoding: .utf8)
       else {
+        let deleteStatus = SecItemDelete(baseQuery(for: identity) as CFDictionary)
+        guard deleteStatus == errSecSuccess || deleteStatus == errSecItemNotFound else {
+          throw KeychainError.operationFailed(deleteStatus)
+        }
         throw KeychainError.invalidStoredValue
       }
       return password

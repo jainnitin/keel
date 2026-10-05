@@ -57,5 +57,15 @@ final class ReaderStateTests: XCTestCase {
     XCTAssertThrowsError(
       try store.state(for: DocumentIdentity(rawValue: "document"))
     )
+    XCTAssertNil(defaults.data(forKey: "states"))
+
+    try store.save(
+      ReaderState(pageIndex: 4),
+      for: DocumentIdentity(rawValue: "document")
+    )
+    XCTAssertEqual(
+      try store.state(for: DocumentIdentity(rawValue: "document"))?.pageIndex,
+      4
+    )
   }
 }

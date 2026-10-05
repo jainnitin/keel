@@ -102,7 +102,7 @@ struct ReaderRootView: View {
       columnVisibility = isVisible ? .all : .detailOnly
     }
     .toolbar {
-      ReaderToolbar(model: model, columnVisibility: $columnVisibility)
+      ReaderToolbar(model: model)
     }
   }
 }
@@ -110,32 +110,15 @@ struct ReaderRootView: View {
 private struct ReaderToolbar: ToolbarContent {
   @ObservedObject var model: ReaderViewModel
   @ObservedObject private var viewer: PDFViewController
-  @Binding var columnVisibility: NavigationSplitViewVisibility
   @State private var pageText: String
 
-  init(
-    model: ReaderViewModel,
-    columnVisibility: Binding<NavigationSplitViewVisibility>
-  ) {
+  init(model: ReaderViewModel) {
     self.model = model
     viewer = model.viewer
-    _columnVisibility = columnVisibility
     _pageText = State(initialValue: String(model.viewer.currentPageIndex + 1))
   }
 
   var body: some ToolbarContent {
-    ToolbarItem(placement: .navigation) {
-      Button {
-        withAnimation {
-          columnVisibility = columnVisibility == .detailOnly ? .all : .detailOnly
-        }
-      } label: {
-        Label("Toggle Sidebar", systemImage: "sidebar.left")
-      }
-      .help("Show or hide the sidebar")
-      .keyboardShortcut("s", modifiers: [.command, .control])
-    }
-
     ToolbarItemGroup(placement: .primaryAction) {
       Button(action: viewer.previousPage) {
         Label("Previous Page", systemImage: "chevron.up")
